@@ -1,0 +1,462 @@
+{
+  "config": {
+    "cookie": {
+      "pre": "592b_",
+      "domain": "",
+      "path": "\/"
+    },
+    "setting": {
+      "charset": "utf-8",
+      "cache": "mysql",
+      "timezone": "Asia\/Shanghai",
+      "memory_limit": "256M",
+      "filemode": 420,
+      "authkey": "ef60af0f",
+      "founder": "1",
+      "development": 0,
+      "referrer": 0,
+      "https": 0,
+      "memcache": {
+        "server": "",
+        "port": 11211,
+        "pconnect": 1,
+        "timeout": 30,
+        "session": 1
+      },
+      "proxy": {
+        "host": "",
+        "auth": ""
+      },
+      "redis": {
+        "server": "",
+        "port": 6379,
+        "pconnect": 0,
+        "requirepass": "",
+        "timeout": 1
+      },
+      "maxtimesql": 5
+    },
+    "upload": {
+      "image": {
+        "extentions": ["gif", "jpg", "pem", "jpeg", "png"],
+        "limit": 5000
+      },
+      "attachdir": "attachment",
+      "audio": {
+        "extentions": ["mp3"],
+        "limit": 5000
+      }
+    },
+    "db": {
+      "tablepre": "lailu_",
+      "slave_status": false
+    }
+  },
+  "timestamp": 1606406737,
+  "charset": "utf-8",
+  "clientip": "127.0.0.1",
+  "sitescheme": "http:\/\/",
+  "script_name": "\/merchant\/web\/index.php",
+  "siteroot": "http:\/\/127.0.0.1\/merchant\/",
+  "siteurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=site&a=entry&m=shop&do=web&r=merch",
+  "uid": "1",
+  "uniacid": 1,
+  "setting": {
+    "copyright": {
+      "slides": ["https:\/\/img.alicdn.com\/tps\/TB1pfG4IFXXXXc6XXXXXXXXXXXX.jpg", "https:\/\/img.alicdn.com\/tps\/TB1sXGYIFXXXXc5XpXXXXXXXXXX.jpg", "https:\/\/img.alicdn.com\/tps\/TB1h9xxIFXXXXbKXXXXXXXXXXXX.jpg"]
+    },
+    "authmode": 1,
+    "close": {
+      "status": "0",
+      "reason": ""
+    },
+    "register": {
+      "open": 1,
+      "verify": 0,
+      "code": 1,
+      "groupid": 1
+    },
+    "site": {
+      "key": "",
+      "token": "7ce173e173848ed26fb4d4951334c5fa",
+      "url": "http:\/\/rr.lailu.shop",
+      "version": "2.0.0",
+      "family": "x",
+      "type": "register"
+    },
+    "module_receive_ban": [],
+    "platform": {
+      "token": "P5Q15SO7160B5jP77D21qSQ5hGPBN1su",
+      "encodingaeskey": "dw0394w88I65Tfih8VWHSwT58vkWHSl40VswTeh08Sy",
+      "appsecret": "",
+      "appid": "",
+      "authstate": 1
+    },
+    "upload": {
+      "image": {
+        "extentions": ["gif", "jpg", "pem", "jpeg", "png"],
+        "limit": 5000
+      },
+      "attachdir": "attachment",
+      "audio": {
+        "extentions": ["mp3"],
+        "limit": 5000
+      }
+    },
+    "remote_complete_info": null
+  },
+  "os": "windows",
+  "container": "unknown",
+  "token": "df483148",
+  "username": "admin",
+  "user": {
+    "uid": "1",
+    "owner_uid": "0",
+    "groupid": "1",
+    "founder_groupid": "0",
+    "username": "admin",
+    "type": "0",
+    "status": "0",
+    "joindate": "1605004925",
+    "joinip": "",
+    "lastvisit": "1606400488",
+    "lastip": "127.0.0.1",
+    "remark": "",
+    "starttime": "0",
+    "endtime": "0",
+    "register_type": "0",
+    "openid": "",
+    "welcome_link": "0",
+    "notice_setting": [],
+    "is_bind": "0",
+    "avatar": null,
+    "hash": "0687c55727c370fa717c375b3b1c7178",
+    "name": "admin",
+    "clerk_id": "1",
+    "store_id": 0,
+    "clerk_type": "2",
+    "currentvisit": "1606405083",
+    "currentip": "127.0.0.1"
+  },
+  "isfounder": true,
+  "isadmin": true,
+  "isw7_request": false,
+  "highest_role": "founder",
+  "role": "founder",
+  "template": "2.0",
+  "attachurl_local": "http:\/\/127.0.0.1\/merchant\/attachment\/",
+  "attachurl": "http:\/\/127.0.0.1\/merchant\/attachment\/",
+  "page": {
+    "copyright": {
+      "slides": ["https:\/\/img.alicdn.com\/tps\/TB1pfG4IFXXXXc6XXXXXXXXXXXX.jpg", "https:\/\/img.alicdn.com\/tps\/TB1sXGYIFXXXXc5XpXXXXXXXXXX.jpg", "https:\/\/img.alicdn.com\/tps\/TB1h9xxIFXXXXbKXXXXXXXXXXXX.jpg"]
+    }
+  },
+  "account": {
+    "acid": "1",
+    "uniacid": "1",
+    "token": "omJNpZEhZeHj1ZxFECKkP48B5VFbk1HP",
+    "encodingaeskey": "",
+    "level": "1",
+    "name": "\u5fae\u64ce\u56e2\u961f",
+    "account": "",
+    "original": "",
+    "signature": "",
+    "country": "",
+    "province": "",
+    "city": "",
+    "username": "",
+    "password": "",
+    "lastupdate": "0",
+    "key": "",
+    "secret": "",
+    "styleid": "1",
+    "subscribeurl": "",
+    "auth_refresh_token": "",
+    "encrypt_key": "",
+    "hash": "uRr8qvQV",
+    "type": "1",
+    "isconnect": "0",
+    "isdeleted": "0",
+    "endtime": "0",
+    "send_account_expire_status": "0",
+    "send_api_expire_status": "0",
+    "groupid": "-1",
+    "description": "\u4e00\u4e2a\u671d\u6c14\u84ec\u52c3\u7684\u56e2\u961f",
+    "default_acid": "1",
+    "rank": null,
+    "title_initial": "W",
+    "createtime": "0",
+    "logo": "",
+    "qrcode": "",
+    "create_uid": "0",
+    "type_sign": "account",
+    "starttime": "0",
+    "groups": {
+      "1": {
+        "groupid": "1",
+        "uniacid": "1",
+        "title": "\u9ed8\u8ba4\u4f1a\u5458\u7ec4",
+        "credit": "0",
+        "isdefault": "1"
+      }
+    },
+    "setting": {
+      "uniacid": "1",
+      "passport": {
+        "focusreg": 0,
+        "item": "email",
+        "type": "password"
+      },
+      "oauth": {
+        "status": "0",
+        "account": "0"
+      },
+      "jsauth_acid": "0",
+      "notify": {
+        "sms": {
+          "balance": 0,
+          "signature": ""
+        }
+      },
+      "creditnames": {
+        "credit1": {
+          "title": "\u79ef\u5206",
+          "enabled": 1
+        },
+        "credit2": {
+          "title": "\u4f59\u989d",
+          "enabled": 1
+        },
+        "credit3": {
+          "title": "",
+          "enabled": 0
+        },
+        "credit4": {
+          "title": "",
+          "enabled": 0
+        },
+        "credit5": {
+          "title": "",
+          "enabled": 0
+        }
+      },
+      "creditbehaviors": {
+        "activity": "credit1",
+        "currency": "credit2"
+      },
+      "welcome": "",
+      "default": "",
+      "default_message": "",
+      "payment": {
+        "credit": {
+          "switch": false
+        },
+        "alipay": {
+          "switch": false,
+          "account": "",
+          "partner": "",
+          "secret": ""
+        },
+        "wechat": {
+          "switch": false,
+          "account": false,
+          "signkey": "",
+          "partner": "",
+          "key": ""
+        },
+        "delivery": {
+          "switch": false
+        }
+      },
+      "stat": "",
+      "default_site": "1",
+      "sync": "0",
+      "recharge": "",
+      "tplnotice": "",
+      "grouplevel": "1",
+      "mcplugin": "",
+      "exchange_enable": "0",
+      "coupon_type": "1",
+      "menuset": "",
+      "statistics": "",
+      "bind_domain": "",
+      "comment_status": "0",
+      "reply_setting": "0",
+      "default_module": "",
+      "attachment_limit": "0",
+      "attachment_size": "",
+      "sync_member": "0",
+      "remote": ""
+    },
+    "grouplevel": "1",
+    "type_name": "\u516c\u4f17\u53f7",
+    "switchurl": ".\/index.php?c=account&a=display&do=switch&uniacid=1",
+    "setmeal": {
+      "uid": -1,
+      "username": "\u521b\u59cb\u4eba",
+      "timelimit": "\u672a\u8bbe\u7f6e",
+      "groupid": "-1",
+      "groupname": "\u6240\u6709\u670d\u52a1"
+    },
+    "current_user_role": "founder",
+    "is_star": 0,
+    "manageurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=account&a=post&uniacid=1&account_type=1",
+    "accessurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=account&a=post&uniacid=1&account_type=1",
+    "roleurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=account&a=post-user&do=edit&uniacid=1&account_type=1"
+  },
+  "uniaccount": {
+    "acid": "1",
+    "uniacid": "1",
+    "token": "omJNpZEhZeHj1ZxFECKkP48B5VFbk1HP",
+    "encodingaeskey": "",
+    "level": "1",
+    "name": "\u5fae\u64ce\u56e2\u961f",
+    "account": "",
+    "original": "",
+    "signature": "",
+    "country": "",
+    "province": "",
+    "city": "",
+    "username": "",
+    "password": "",
+    "lastupdate": "0",
+    "key": "",
+    "secret": "",
+    "styleid": "1",
+    "subscribeurl": "",
+    "auth_refresh_token": "",
+    "encrypt_key": "",
+    "hash": "uRr8qvQV",
+    "type": "1",
+    "isconnect": "0",
+    "isdeleted": "0",
+    "endtime": "0",
+    "send_account_expire_status": "0",
+    "send_api_expire_status": "0",
+    "groupid": "-1",
+    "description": "\u4e00\u4e2a\u671d\u6c14\u84ec\u52c3\u7684\u56e2\u961f",
+    "default_acid": "1",
+    "rank": null,
+    "title_initial": "W",
+    "createtime": "0",
+    "logo": "",
+    "qrcode": "",
+    "create_uid": "0",
+    "type_sign": "account",
+    "starttime": "0",
+    "groups": {
+      "1": {
+        "groupid": "1",
+        "uniacid": "1",
+        "title": "\u9ed8\u8ba4\u4f1a\u5458\u7ec4",
+        "credit": "0",
+        "isdefault": "1"
+      }
+    },
+    "setting": {
+      "uniacid": "1",
+      "passport": {
+        "focusreg": 0,
+        "item": "email",
+        "type": "password"
+      },
+      "oauth": {
+        "status": "0",
+        "account": "0"
+      },
+      "jsauth_acid": "0",
+      "notify": {
+        "sms": {
+          "balance": 0,
+          "signature": ""
+        }
+      },
+      "creditnames": {
+        "credit1": {
+          "title": "\u79ef\u5206",
+          "enabled": 1
+        },
+        "credit2": {
+          "title": "\u4f59\u989d",
+          "enabled": 1
+        },
+        "credit3": {
+          "title": "",
+          "enabled": 0
+        },
+        "credit4": {
+          "title": "",
+          "enabled": 0
+        },
+        "credit5": {
+          "title": "",
+          "enabled": 0
+        }
+      },
+      "creditbehaviors": {
+        "activity": "credit1",
+        "currency": "credit2"
+      },
+      "welcome": "",
+      "default": "",
+      "default_message": "",
+      "payment": {
+        "credit": {
+          "switch": false
+        },
+        "alipay": {
+          "switch": false,
+          "account": "",
+          "partner": "",
+          "secret": ""
+        },
+        "wechat": {
+          "switch": false,
+          "account": false,
+          "signkey": "",
+          "partner": "",
+          "key": ""
+        },
+        "delivery": {
+          "switch": false
+        }
+      },
+      "stat": "",
+      "default_site": "1",
+      "sync": "0",
+      "recharge": "",
+      "tplnotice": "",
+      "grouplevel": "1",
+      "mcplugin": "",
+      "exchange_enable": "0",
+      "coupon_type": "1",
+      "menuset": "",
+      "statistics": "",
+      "bind_domain": "",
+      "comment_status": "0",
+      "reply_setting": "0",
+      "default_module": "",
+      "attachment_limit": "0",
+      "attachment_size": "",
+      "sync_member": "0",
+      "remote": ""
+    },
+    "grouplevel": "1",
+    "type_name": "\u516c\u4f17\u53f7",
+    "switchurl": ".\/index.php?c=account&a=display&do=switch&uniacid=1",
+    "setmeal": {
+      "uid": -1,
+      "username": "\u521b\u59cb\u4eba",
+      "timelimit": "\u672a\u8bbe\u7f6e",
+      "groupid": "-1",
+      "groupname": "\u6240\u6709\u670d\u52a1"
+    },
+    "current_user_role": "founder",
+    "is_star": 0,
+    "manageurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=account&a=post&uniacid=1&account_type=1",
+    "accessurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=account&a=post&uniacid=1&account_type=1",
+    "roleurl": "http:\/\/127.0.0.1\/merchant\/web\/index.php?c=account&a=post-user&do=edit&uniacid=1&account_type=1"
+  },
+  "acid": "1",
+  "weid": 1
+}

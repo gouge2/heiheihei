@@ -1,0 +1,69 @@
+{template 'merchmanage/common'}
+<style type="text/css">
+    .wrapper {position: relative;}
+    #input {position: absolute;top: 0;left: 0;opacity: 0;z-index: -10;}
+</style>
+<div class='fui-page fui-page-current'>
+    <div class="fui-header fui-header-success">
+
+        <div class="title">用户登录</div>
+        <div class="fui-header-right"></div>
+    </div>
+    <div class='fui-content page-login'>
+
+<!--        <div class="panel-logo">-->
+<!--            <img src="{$logo}" />-->
+<!--        </div>-->
+        <div class="panel-login">
+            <div class="fui-cell-group fui-cell-group-o">
+                <div class="fui-cell">
+                    <div class="fui-cell-info">
+                        <input type="text" placeholder="请输入用户名" class="fui-input" id="username" />
+                    </div>
+                </div>
+                <div class="fui-cell">
+                    <div class="fui-cell-info">
+                        <input type="password" placeholder="请输入密码" class="fui-input" id="password" />
+                    </div>
+                </div>
+            </div>
+            <div class="btn btn-success block btn-submit" data-type="" id="btn-submit">登录</div>
+            <div class="fui-cell-group-o">
+                <span style="font-weight: bold">您可以复制链接并前往PC端登录后台：</span>
+                <p>用户名：{$shop['uname']}</p>
+            </div>
+            <div class="fui-cell-group-o wrapper">
+                <div style="width: 100%;background-color: #F6F6F6;height: 2.2rem;margin-top: 0.2rem">
+                    <span id="text" style="text-align: left; white-space: normal;word-break: break-all;margin: 0.3rem">
+                        {$url}
+                    </span>
+                </div>
+                <div style="    margin-top: 0.4rem;margin-bottom: 0.4rem;">
+                    <textarea id="input"></textarea>
+                    <button onclick="copyText()" style="background-color: #A1E4CB;width: 5rem;height: 1.7rem;border: 0.1rem solid #A1E4CB;border-radius: 0.3rem">
+                        <font style="color: #ffffff">点击复制链接</font>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script language="javascript">
+        require(['../addons/shop/plugin/merchmanage/static/js/base.js'],function(modal){
+            
+            modal.initLogin({backurl:"{$backurl}"});
+        });
+    </script>
+    <script type="text/javascript">
+        function copyText() {
+            var text = document.getElementById("text").innerText;
+            var input = document.getElementById("input");
+            input.value = text; // 修改文本框的内容
+            input.select(); // 选中文本
+            document.execCommand("copy"); // 执行浏览器复制命令
+            alert("复制成功");
+        }
+    </script>
+</div>
+
+{template '_footer'}

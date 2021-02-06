@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/dsbridge@3.1.3/dist/dsbridge.js"> </script>
+    <style>
+        .noimg {
+            width: 100vw;
+            height: 1px;
+        }
+
+        .swiper-pagination-bullet {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+        }
+    </style>
+    <title>test</title>
+</head>
+
+<body>
+<a href="javascript:test()">测试</a>
+</body>
+<script>
+    function test() {
+        var str=dsBridge.call("native.token",null);
+        alert(str);
+    }
+
+</script>
+
+
+</html>

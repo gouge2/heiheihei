@@ -1,0 +1,48 @@
+CREATE TABLE `lailu_core_attachment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `uid` int(10) unsigned NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `attachment` varchar(255) NOT NULL,
+  `type` tinyint(3) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `module_upload_dir` varchar(100) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `displayorder` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `lailu_uni_settings` (
+  `uniacid` int(10) unsigned NOT NULL,
+  `passport` varchar(200) NOT NULL,
+  `oauth` varchar(100) NOT NULL,
+  `jsauth_acid` int(10) unsigned NOT NULL,
+  `notify` varchar(2000) NOT NULL,
+  `creditnames` varchar(500) NOT NULL,
+  `creditbehaviors` varchar(500) NOT NULL,
+  `welcome` varchar(60) NOT NULL,
+  `default` varchar(60) NOT NULL,
+  `default_message` varchar(2000) NOT NULL,
+  `payment` text NOT NULL,
+  `stat` varchar(300) NOT NULL,
+  `default_site` int(10) unsigned DEFAULT NULL,
+  `sync` tinyint(3) unsigned NOT NULL,
+  `recharge` varchar(500) NOT NULL,
+  `tplnotice` varchar(2000) NOT NULL,
+  `grouplevel` tinyint(3) unsigned NOT NULL,
+  `mcplugin` varchar(500) NOT NULL,
+  `exchange_enable` tinyint(3) unsigned NOT NULL,
+  `coupon_type` tinyint(3) unsigned NOT NULL,
+  `menuset` text NOT NULL,
+  `statistics` varchar(100) NOT NULL,
+  `bind_domain` varchar(200) NOT NULL,
+  `comment_status` tinyint(1) NOT NULL,
+  `reply_setting` tinyint(4) NOT NULL,
+  `default_module` varchar(100) NOT NULL,
+  `attachment_limit` int(11) NOT NULL,
+  `attachment_size` varchar(20) NOT NULL,
+  `sync_member` tinyint(1) NOT NULL,
+  `remote` varchar(2000) NOT NULL,
+  PRIMARY KEY (`uniacid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

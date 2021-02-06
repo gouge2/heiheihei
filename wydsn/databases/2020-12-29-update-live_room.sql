@@ -1,0 +1,1 @@
+ALTER table lailu_live_room ADD sort int(10) unsigned DEFAULT '0' COMMENT '排序';
