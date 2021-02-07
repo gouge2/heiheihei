@@ -111,52 +111,58 @@ class ShortLiveGoodsModel extends Model
         if ($platform == 'applet' && $type != 'the') {
             $whe['from']= ['neq', 'tb'];
         }
-
-        // 我的橱窗
-        if ($type == 'thing') {
-            unset($whe['is_status']);
-            $field              = 'DISTINCT goods_id,from';   // 不可在添加其他字段查询 因为有去重筛选
-            $sg_arr             = $this->field($field)->where($whe)->page($page, $limit)->order($sort)->select();
-
-        // 短视频
-        } elseif ($type == 'short') {
-            $field              = 'short_id,'. $field;
-            $sg_arr             = $this->where($whe)->getField($field);
-
-        // 本场直播的商品列表  或者 后台假直播商品
-        } elseif ($type == 'the' || $type == 'ad_fake') {
-            $sort               = 'sort desc,id asc';
-            $sg_arr             = $this->field($field)->where($whe)->order($sort)->select();
-
-        // 直播的列表展示的一个商品
-        } elseif ($type == 'live' || $type == 'fake') {
-            $field              = $type == 'fake' ? 'user_id,'. $field : 'site_id,'. $field;
-            $whe['is_explain']  = 'load';
-            $sg_arr_one         = $this->where($whe)->getField($field);
-
-            $whe['is_explain']  = 'not';
-            $sg_arr_two         = $this->where($whe)->order($sort)->getField($field);
-
-            $sg_arr_one         = $sg_arr_one ? $sg_arr_one : [];
-            $sg_arr_two         = $sg_arr_two ? $sg_arr_two : [];
-            $sg_arr             = $sg_arr_one + $sg_arr_two;
-
-        // 直播回放列表展示的一个商品
-        } elseif ($type == 'record') {
-            $field              = 'site_id,'. $field;
-            $sg_arr_one         = $this->where($whe)->select();
-            $sg_arr             = $sg_arr_one ? $sg_arr_one : [];
-        }
-
-        // 我的橱窗 总数量
-        if ($type == 'thing') {
-            $all_list           = $this->field($field)->where($whe)->select();
-            $data['total_num']  = $all_list ? (int)count($all_list) : 0;
-        }
-
-        // 自己传输的假列表
-        if ($type == 'package' && $goods_list) {
-            $sg_arr             = $goods_list;
+        
+        
+        switch ($type) {
+            // 我的橱窗
+            case 'thing':
+                unset($whe['is_status']);
+                $field              = 'DISTINCT goods_id,from';   // 不可在添加其他字段查询 因为有去重筛选
+                $sg_arr             = $this->field($field)->where($whe)->page($page, $limit)->order($sort)->select();
+                $all_list           = $this->field($field)->where($whe)->count();
+                $data['total_num']  = $all_list ? (int)$all_list : 0;
+                break;
+            // 短视频
+            case 'short':
+                $field              = 'short_id,'. $field;
+                $sg_arr             = $this->where($whe)->getField($field);
+                $sm_list                    = json_decode(file_get_contents('http://'. $_SERVER['HTTP_HOST'] .'/app.php?c=Tbk&a=getGoodsSmoke'), true);
+                $smokes                     = (isset($sm_list['data']['list']) && $sm_list['data']['list']) ? $sm_list['data']['list'] : [];
+                $goods_demo['smokes']       = $smokes;             // 商品烟雾
+                $goods_demo['critic_list']  = [];                  // 商品评论
+                shuffle($smokes);                           // 商品烟雾 随机排序
+                $goods_one['smokes']= $smokes;                     // 商品烟雾
+                break;
+            // 本场直播的商品列表  或者 后台假直播商品
+            case 'the':
+            case 'ad_fake':
+                $sort               = 'sort desc,id asc';
+                $sg_arr             = $this->field($field)->where($whe)->order($sort)->select();
+                break;
+            // 直播的列表展示的一个商品
+            case 'live':
+            case 'fake':
+                $field              = $type == 'fake' ? 'user_id,'. $field : 'site_id,'. $field;
+                $whe['is_explain']  = 'load';
+                $sg_arr_one         = $this->where($whe)->getField($field);
+    
+                $whe['is_explain']  = 'not';
+                $sg_arr_two         = $this->where($whe)->order($sort)->getField($field);
+    
+                $sg_arr_one         = $sg_arr_one ? $sg_arr_one : [];
+                $sg_arr_two         = $sg_arr_two ? $sg_arr_two : [];
+                $sg_arr             = $sg_arr_one + $sg_arr_two;
+                break;
+            // 直播回放列表展示的一个商品
+            case 'record':
+                $field              = 'site_id,'. $field;
+                $sg_arr_one         = $this->find($field)->where($whe)->select();
+                $sg_arr             = $sg_arr_one ? $sg_arr_one : [];
+                break;
+            // 自己传输的假列表
+            case 'package':
+                if ($goods_list) $sg_arr = $goods_list;
+                break;
         }
 
         if ($sg_arr) {
@@ -170,31 +176,21 @@ class ShortLiveGoodsModel extends Model
             $fee_user   = $group_msg ? $group_msg['fee_user'] : 0;
 
             // 淘宝类库
-            Vendor('tbk.tbk','','.class.php');
-            $Tbk        = new \tbk();
-            $ip         = getIP();
             $tb_gid     = '';
             $tb_data    = S('tb_data');
             $tb_data    = $tb_data ? $tb_data : [];
 
             // 京东类库
-           /*  Vendor('JingDong.JingDong','','.class.php');
-            $JindDong   = new \JindDong(); */
-            $Jingtuitui = new \Common\Controller\JingtuituiController();
             $jd_gid     = [];
             $jd_data    = S('jd_data');
             $jd_data    = $jd_data ? $jd_data : [];
 
             // 拼多多类库
-            Vendor('pdd.pdd','','.class.php');
-            $Pdd        = new \pdd();
             $pdd_gid    = [];
             $pdd_data    = S('pdd_data');
             $pdd_data    = $pdd_data ? $pdd_data : [];
 
             // 唯品会类库
-            Vendor('vip.vip','','.class.php');
-            $Vip=new \vip();
             $vip_gid    = [];
             $vip_data   = S('vip_data');
             $vip_data   = $vip_data ? $vip_data : [];
@@ -216,15 +212,7 @@ class ShortLiveGoodsModel extends Model
                 'coupon_amount' => '0',
                 'commission'    => '0',
             ];
-
-            // 短视频列表显示的商品
-            if ($type == 'short') {
-                $sm_list                    = json_decode(file_get_contents('http://'. $_SERVER['HTTP_HOST'] .'/app.php?c=Tbk&a=getGoodsSmoke'), true);
-                $smokes                     = (isset($sm_list['data']['list']) && $sm_list['data']['list']) ? $sm_list['data']['list'] : [];
-                $goods_demo['smokes']       = $smokes;             // 商品烟雾
-                $goods_demo['critic_list']  = [];                  // 商品评论
-            }
-
+            
             // 获取商品ID组
             foreach ($sg_arr as $k => $v) {
                 if ($v['from'] == 'tb' && !isset($tb_data[$v['goods_id']])) {
@@ -243,7 +231,11 @@ class ShortLiveGoodsModel extends Model
             // 淘宝商品列表
             $tb_gid     = $tb_gid ? substr($tb_gid, 0,-1) : 0;
             if ($tb_gid) {
+                Vendor('tbk.tbk','','.class.php');
+                $Tbk        = new \tbk();
+                $ip         = getIP();
                 $tb_res     = $Tbk->getItemList($tb_gid, '2', $ip);
+                
                 if ($tb_res && isset($tb_res['data']['list']) && $tb_res['data']['list']) {
                     foreach ($tb_res['data']['list'] as $v) {
                         $tb_data[$v['num_iid']] = $v;
@@ -255,6 +247,7 @@ class ShortLiveGoodsModel extends Model
 
             // 京东商品列表 （暂时用京推推的接口）
             if ($jd_gid) {
+                $Jingtuitui = new \Common\Controller\JingtuituiController();
                 $jd_data    = $Jingtuitui::jdConciseList($jd_gid, $fee_user, $user_msg['group_id']);
 
                 S('jd_data', $jd_data, 86400);     // 保存三天缓存
@@ -262,6 +255,8 @@ class ShortLiveGoodsModel extends Model
 
             // 拼多多商品列表
             if ($pdd_gid) {
+                Vendor('pdd.pdd','','.class.php');
+                $Pdd        = new \pdd();
                 $pdd_data   = $Pdd->pddConciseList($pdd_gid, $fee_user, $user_msg['group_id']);
 
                 S('pdd_data', $pdd_data, 86400);     // 保存三天缓存
@@ -269,6 +264,9 @@ class ShortLiveGoodsModel extends Model
 
             // 唯品会商品列表
             if ($vip_gid) {
+                // 唯品会类库
+                Vendor('vip.vip','','.class.php');
+                $Vip=new \vip();
                 $vip_goods = $Vip->getGoodsDetail($vip_gid);
 
                 if ((isset($vip_goods['data']['list']) || isset($vip_goods['data']['goods_details'])) && $vip_goods) {
@@ -295,113 +293,105 @@ class ShortLiveGoodsModel extends Model
                 $goods_one              = $goods_demo;
                 $goods_one['goods_id']  = $val['goods_id'];
                 $goods_one['from']      = $val['from'];
+                // 获取商品信息
+                switch ($val['from']) {
+                    case 'tb':
+                        if (isset($tb_data[$val['goods_id']])) {
+                            $goods_tem                      = $tb_data[$val['goods_id']];
 
-                if ($type == 'short') {
-                    shuffle($smokes);                       // 商品烟雾 随机排序
-                    $goods_one['smokes']= $smokes;          // 商品烟雾
-                }
+                            $goods_one['goods_url']         = $goods_tem['item_url'];// 链接
+                            $goods_one['goods_name']        = $goods_tem['title']; // 名称
+                            $goods_one['img']               = $goods_tem['pict_url'];  // 主图
+                            $goods_one['price']             = substr(sprintf("%.3f", ($goods_tem['zk_final_price']*1 - $goods_tem['coupon_amount']*1)), 0, -1);        // 价格
+                            $goods_one['old_price']         = substr(sprintf("%.3f", $goods_tem['zk_final_price']), 0, -1);    // 原价
+                            $goods_one['sales_volume']      = $goods_tem['volume'];// 销量
+                            $goods_one['coupon_amount']     = (string)$goods_tem['coupon_amount'];  // 优惠券金额
 
-                // 淘宝商品信息
-                if ($val['from'] == 'tb') {
-                    if (isset($tb_data[$val['goods_id']])) {
-                        $goods_tem                      = $tb_data[$val['goods_id']];
-
-                        $goods_one['goods_url']         = $goods_tem['item_url'];// 链接
-                        $goods_one['goods_name']        = $goods_tem['title']; // 名称
-                        $goods_one['img']               = $goods_tem['pict_url'];  // 主图
-                        $goods_one['price']             = substr(sprintf("%.3f", ($goods_tem['zk_final_price']*1 - $goods_tem['coupon_amount']*1)), 0, -1);        // 价格
-                        $goods_one['old_price']         = substr(sprintf("%.3f", $goods_tem['zk_final_price']), 0, -1);    // 原价
-                        $goods_one['sales_volume']      = $goods_tem['volume'];// 销量
-                        $goods_one['coupon_amount']     = (string)$goods_tem['coupon_amount'];  // 优惠券金额
-
-                        // 根据会员组计算相应佣金   保留2位小数，四舍五不入
-                        $goods_one['commission']        = $goods_tem['commission'] ? $goods_tem['commission']*$fee_user/100 : $fee_user/100;
-                        $goods_one['commission']        = substr(sprintf("%.3f", $goods_one['commission']), 0, -1);
-                    }
-
-                // 京东商品信息
-                } elseif ($val['from'] == 'jd') {
-                    if (isset($jd_data[$val['goods_id']])) {
-                        $goods_one                      = $jd_data[$val['goods_id']];
-
-                        if ($type == 'short') {
-                            $goods_one['critic_list']   = $goods_demo['critic_list'];
-                            $goods_one['smokes']        = $smokes;          // 商品烟雾
+                            // 根据会员组计算相应佣金   保留2位小数，四舍五不入
+                            $goods_one['commission']        = $goods_tem['commission'] ? $goods_tem['commission']*$fee_user/100 : $fee_user/100;
+                            $goods_one['commission']        = substr(sprintf("%.3f", $goods_one['commission']), 0, -1);
                         }
-                    }
+                        break;
+                    case 'jd':
+                        if (isset($jd_data[$val['goods_id']])) {
+                            $goods_one                      = $jd_data[$val['goods_id']];
 
-                // 拼多多商品信息
-                } elseif ($val['from'] == 'pdd') {
-                    if (isset($pdd_data[$val['goods_id']])) {
-                        $goods_one                  = $pdd_data[$val['goods_id']];
-
-                        if ($type == 'short') {
-                            $goods_one['critic_list']   = $goods_demo['critic_list'];
-                            $goods_one['smokes']        = $smokes;          // 商品烟雾
+                            if ($type == 'short') {
+                                $goods_one['critic_list']   = $goods_demo['critic_list'];
+                                $goods_one['smokes']        = $smokes;          // 商品烟雾
+                            }
                         }
-                    }
+                        break;
+                    case 'pdd':
+                        if (isset($pdd_data[$val['goods_id']])) {
+                            $goods_one                  = $pdd_data[$val['goods_id']];
 
-                // 唯品会商品信息
-                } elseif ($val['from'] == 'vip') {
-                    if (isset($vip_data[$val['goods_id']])) {
-                        $goods_tem                      = $vip_data[$val['goods_id']];
-
-                        $goods_one['goods_url']         = $goods_tem['destUrl'];// 链接
-                        $goods_one['goods_name']        = $goods_tem['goodsName']; // 名称
-                        $goods_one['img']               = $goods_tem['goodsMainPicture'];  // 主图
-                        $goods_one['price']             = substr(sprintf("%.3f", $goods_tem['vipPrice']), 0, -1);        // 价格
-                        $goods_one['old_price']         = substr(sprintf("%.3f", $goods_tem['marketPrice']), 0, -1);    // 原价
-                        $goods_one['sales_volume']      = '100';// 销量
-                        $goods_one['coupon_amount']     = (string)$goods_tem['commissionRate'];  // 优惠券金额
-
-                        // 根据会员组计算相应佣金   保留2位小数，四舍五不入
-                        $goods_one['commission']        = $goods_tem['commission'] ? $goods_tem['commission']*$fee_user/100 : $fee_user/100;
-                        $goods_one['commission']        = substr(sprintf("%.3f", $goods_one['commission']), 0, -1);
-                    }
-
-                // 自营商品信息
-                } elseif ($val['from'] == 'self') {
-                    if (isset($self_data[$val['goods_id']])) {
-                        $temp                       = $goods_one;
-                        $goods_one                  = $self_data[$val['goods_id']];
-
-                        // 获取之前的数据
-                        $goods_one['from']          = $temp['from'];
-                        $goods_one['goods_url']     = $temp['goods_url'];
-
-                        $goods_one['old_price']     = substr(sprintf("%.3f", $goods_one['old_price']), 0, -1);
-                        $goods_one['price']         = $goods_one['price']/100;        // 价格
-                        $goods_one['price']         = substr(sprintf("%.3f", $goods_one['price']), 0, -1);
-                        $goods_one['sales_volume']  = (string)($goods_one['sales_volume']+$goods_one['virtual_volume']);  // 销量
-                        unset($goods_one['virtual_volume']);
-                        $goods_one['img']           = (is_url($goods_one['img']) ? $goods_one['img'] : WEB_URL . $goods_one['img']);    // 主图
-
-                        // 佣金  保留2位小数，四舍五不入
-                        $goods_one['commission']    = 0;
-                        $goods_one['commission']    = substr(sprintf("%.3f", $goods_one['commission']), 0, -1);
-                        $hostTreatModel = new \Common\Model\HostTreatModel();
-                        $ShortLiveGoodsModel = new \Common\Model\ShortLiveGoodsModel();
-                        #判定是否存在入库商品列表
-                        $item = $ShortLiveGoodsModel->getOne(['from'=>'self','goods_id'=>$self_data[$val['goods_id']]]);
-                        if($item)
-                        {
-                            $is_has = 1;
+                            if ($type == 'short') {
+                                $goods_one['critic_list']   = $goods_demo['critic_list'];
+                                $goods_one['smokes']        = $smokes;          // 商品烟雾
+                            }
                         }
-                        $userGroup = new \Common\Model\UserGroupModel();
-                        $groupList = $userGroup->getGroupList();
-                        $groupVipMsg 	= end($groupList);
-                        $userCommission = $hostTreatModel->getCommissionByUser($at_id, $is_has,$self_data[$val]['fx_profit_money']/100, $groupVipMsg['id']);
-                        $goods_one['commission'] 	= $userCommission['userHasCommission'];
+                        break;
+                    case 'vip':
+                        if (isset($vip_data[$val['goods_id']])) {
+                            $goods_tem                      = $vip_data[$val['goods_id']];
 
-                        // 优惠券金额
-                        $goods_one['coupon_amount'] = $temp['coupon_amount'];
+                            $goods_one['goods_url']         = $goods_tem['destUrl'];// 链接
+                            $goods_one['goods_name']        = $goods_tem['goodsName']; // 名称
+                            $goods_one['img']               = $goods_tem['goodsMainPicture'];  // 主图
+                            $goods_one['price']             = substr(sprintf("%.3f", $goods_tem['vipPrice']), 0, -1);        // 价格
+                            $goods_one['old_price']         = substr(sprintf("%.3f", $goods_tem['marketPrice']), 0, -1);    // 原价
+                            $goods_one['sales_volume']      = '100';// 销量
+                            $goods_one['coupon_amount']     = (string)$goods_tem['commissionRate'];  // 优惠券金额
 
-                        if ($type == 'short') {
+                            // 根据会员组计算相应佣金   保留2位小数，四舍五不入
+                            $goods_one['commission']        = $goods_tem['commission'] ? $goods_tem['commission']*$fee_user/100 : $fee_user/100;
+                            $goods_one['commission']        = substr(sprintf("%.3f", $goods_one['commission']), 0, -1);
+                        }
+                        break;
+                    case 'self':
+                        if (isset($self_data[$val['goods_id']])) {
+                            $temp                       = $goods_one;
+                            $goods_one                  = $self_data[$val['goods_id']];
+
                             // 获取之前的数据
-                            $goods_one['smokes']       = $temp['smokes'];
-                            $goods_one['critic_list']  = $temp['critic_list'];
+                            $goods_one['from']          = $temp['from'];
+                            $goods_one['goods_url']     = $temp['goods_url'];
+
+                            $goods_one['old_price']     = substr(sprintf("%.3f", $goods_one['old_price']), 0, -1);
+                            $goods_one['price']         = $goods_one['price']/100;        // 价格
+                            $goods_one['price']         = substr(sprintf("%.3f", $goods_one['price']), 0, -1);
+                            $goods_one['sales_volume']  = (string)($goods_one['sales_volume']+$goods_one['virtual_volume']);  // 销量
+                            unset($goods_one['virtual_volume']);
+                            $goods_one['img']           = (is_url($goods_one['img']) ? $goods_one['img'] : WEB_URL . $goods_one['img']);    // 主图
+
+                            // 佣金  保留2位小数，四舍五不入
+                            $goods_one['commission']    = 0;
+                            $goods_one['commission']    = substr(sprintf("%.3f", $goods_one['commission']), 0, -1);
+                            $hostTreatModel = new \Common\Model\HostTreatModel();
+                            $ShortLiveGoodsModel = new \Common\Model\ShortLiveGoodsModel();
+                            #判定是否存在入库商品列表
+                            $item = $ShortLiveGoodsModel->getOne(['from'=>'self','goods_id'=>$self_data[$val['goods_id']]]);
+                            if($item)
+                            {
+                                $is_has = 1;
+                            }
+                            $userGroup = new \Common\Model\UserGroupModel();
+                            $groupList = $userGroup->getGroupList();
+                            $groupVipMsg 	= end($groupList);
+                            $userCommission = $hostTreatModel->getCommissionByUser($at_id, $is_has,$self_data[$val]['fx_profit_money']/100, $groupVipMsg['id']);
+                            $goods_one['commission'] 	= $userCommission['userHasCommission'];
+
+                            // 优惠券金额
+                            $goods_one['coupon_amount'] = $temp['coupon_amount'];
+
+                            if ($type == 'short') {
+                                // 获取之前的数据
+                                $goods_one['smokes']       = $temp['smokes'];
+                                $goods_one['critic_list']  = $temp['critic_list'];
+                            }
                         }
-                    }
+                        break;
                 }
 
                 // 添加商品讲解状态
@@ -418,14 +408,8 @@ class ShortLiveGoodsModel extends Model
                     unset($goods_one);
 
                     // 清除缓存
-                    if ($val['from'] == 'tb') {
-                        S('tb_data', null);
-                    } elseif ($val['from'] == 'jd') {
-                        S('jd_data', null);
-                    } elseif ($val['from'] == 'pdd') {
-                        S('pdd_data', null);
-                    } elseif ($val['from'] == 'vip') {
-                        S('vip_data', null);
+                    if ($val['from'] != 'self') {
+                        S("{$val['from']}_data", null);
                     }
 
                     // 该为失效记录
@@ -434,18 +418,25 @@ class ShortLiveGoodsModel extends Model
                     }
 
                 } else {
-                    if ($type == 'short') {
-                        $data[$val['short_id']] = $goods_one;
-                    } elseif ($type == 'live') {
-                        $data[$val['site_id']]  = $goods_one;
-                    } elseif ($type == 'fake') {
-                        $data[$val['user_id']]  = $goods_one;
-                    } elseif ($type == 'record') {
-                        $data[$val['site_id']][]= $goods_one;
-                    } elseif ($type == 'ad_fake') {
-                        $data[$val['id']]       = $goods_one;
-                    } else {
-                        $data[]                 = $goods_one;
+                    switch ($type) {
+                        case 'short':
+                            $data[$val['short_id']] = $goods_one;
+                            break;
+                        case 'live':
+                            $data[$val['site_id']]  = $goods_one;
+                            break;
+                        case 'fake':
+                            $data[$val['user_id']]  = $goods_one;
+                            break;
+                        case 'record':
+                            $data[$val['site_id']][]= $goods_one;
+                            break;
+                        case 'ad_fake':
+                            $data[$val['id']]       = $goods_one;
+                            break;
+                        default:
+                            $data[]                 = $goods_one;
+                            break;
                     }
                 }
             }

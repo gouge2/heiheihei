@@ -619,104 +619,99 @@ class tbk
 	public function getItemList($num_iids,$platform='1',$ip='')
 	{
 		$res_info=$this->getItemInfo($num_iids,$platform,$ip);
-		if($res_info['code']==0) {
-			if($res_info['data'][0]['num_iid']) {
+        $res = $res_info;
+		if ($res_info['code'] == 0) {
+			if ($res_info['data'][0]['num_iid']) {
 				//多件商品
-				$list_tmp=$res_info['data'];
-				$num1=count($list_tmp);
-				$list=array();
-				for ($i=0;$i<$num1;$i++)
+				$list_tmp = $res_info['data'];
+				$num1 = count($list_tmp);
+				$list = [];
+				for ($i = 0;$i < $num1;$i++)
 				{
-					$list[]=$list_tmp[$i];
+					$list[] = $list_tmp[$i];
 				}
-			}else {
+			} else {
 				//一件商品
-				$list[]=$res_info['data'];
+				$list[] = $res_info['data'];
 			}
-			$num=count($list);
 
-			$pid=$this->pid;
-			for ($i=0;$i<$num;$i++) {
-				//判断是天猫还是淘宝商品
-				if($list[$i]['user_type']=='1') {
-					$list[$i]['is_tmall']=true;
-				}else {
-					$list[$i]['is_tmall']=false;
-				}
+			$pid = $this->pid;
+			foreach ($list as $k => $v) {
+                //判断是天猫还是淘宝商品
+                $list[$k]['is_tmall'] = false;
+                if ($list[$k]['user_type'] == '1') {
+                    $list[$k]['is_tmall'] = true;
+                }
 
-				//查询商品佣金以及优惠券
-				$num_iid=$list[$i]['num_iid'];
+                //查询商品佣金以及优惠券
+                $num_iid = $list[$k]['num_iid'];
 
-				//调用大淘客高效转链接口
-                $result_gy = $this->getPrivilegeLink($num_iid, $pid);
-                $gy_data=$result_gy['data'];
+                //调用大淘客高效转链接口
+                $result_gy = S($num_iid.'dtk');
+                if (!$result_gy) {
+                    $result_gy = $this->getPrivilegeLink($num_iid, $pid);
+                    S($num_iid.'dtk', $result_gy, 86400);
+                }
 
-				//优惠券总量
-				if($gy_data['couponTotalCount']) {
-					$list[$i]['coupon_total_count']=$gy_data['couponTotalCount'];
-				}else {
-					$list[$i]['coupon_total_count']=0;
-				}
-				//优惠券剩余量
-				if($gy_data['couponRemainCount']) {
-					$list[$i]['coupon_remain_count']=$gy_data['couponRemainCount'];
-				}else {
-					$list[$i]['coupon_remain_count']=0;
-				}
-				//优惠券开始时间
-				if($gy_data['couponStartTime']) {
-					$list[$i]['coupon_start_time']=$gy_data['couponStartTime'];
-				}else {
-					$list[$i]['coupon_start_time']='';
-				}
-				//优惠券结束时间
-				if($gy_data['couponEndTime']) {
-					$list[$i]['coupon_end_time']=$gy_data['couponEndTime'];
-				}else {
-					$list[$i]['coupon_end_time']='';
-				}
-				//优惠券信息
-				if($gy_data['couponInfo']) {
-					$list[$i]['coupon_info']=$gy_data['couponInfo'];
-					//优惠券面额
-					$pos1=strpos($gy_data['couponInfo'],'减');
-					$pos2=strripos($gy_data['couponInfo'],'元');
-					$list[$i]['coupon_amount']=substr($gy_data['couponInfo'], $pos1+3,$pos2-$pos1-3);
-				}else {
-					$list[$i]['coupon_info']='';
-					$list[$i]['coupon_amount']=0;
-				}
-				//优惠券推广链接-默认链接地址，有优惠券的情况下会进行替换
-				if($gy_data['couponClickUrl']) {
-					$list[$i]['coupon_click_url']=$gy_data['couponClickUrl'];
-				}else {
-					$list[$i]['coupon_click_url']="https://uland.taobao.com/coupon/edetail?itemId=$num_iid&pid=$pid";
-				}
-				//佣金比率(%)
-				$list[$i]['commission_rate']=$gy_data['maxCommissionRate'];
-				//佣金
-				$list[$i]['commission']=($list[$i]['zk_final_price']-$list[$i]['coupon_amount'])*$list[$i]['commission_rate']/100;
-				//保留2位小数，四舍五不入
-				$list[$i]['commission']=substr(sprintf("%.3f",$list[$i]['commission']),0,-1);
+                $gy_data = $result_gy['data'];
 
-				//商品详情页面地址
-				$list[$i]['item_url']=$gy_data['itemUrl'];
+                //优惠券总量
+                $list[$k]['coupon_total_count'] = 0;
+                if ($gy_data['couponTotalCount']) {
+                    $list[$k]['coupon_total_count'] = $gy_data['couponTotalCount'];
+                }
+                
+                //优惠券剩余量
+                $list[$k]['coupon_remain_count'] = 0;
+                if ($gy_data['couponRemainCount']) {
+                    $list[$k]['coupon_remain_count'] = $gy_data['couponRemainCount'];
+                }
+                
+                //优惠券开始时间
+                $list[$k]['coupon_start_time'] = '';
+                if ($gy_data['couponStartTime']) {
+                    $list[$k]['coupon_start_time'] = $gy_data['couponStartTime'];
+                }
+                
+                //优惠券结束时间
+                $list[$k]['coupon_end_time'] = '';
+                if ($gy_data['couponEndTime']) {
+                    $list[$k]['coupon_end_time'] = $gy_data['couponEndTime'];
+                }
+                
+                //优惠券信息
+                $list[$k]['coupon_info'] = '';
+                $list[$k]['coupon_amount'] = 0;
+                if ($gy_data['couponInfo']) {
+                    $list[$k]['coupon_info'] = $gy_data['couponInfo'];
+                    //优惠券面额
+                    $pos1 = strpos($gy_data['couponInfo'],'减');
+                    $pos2 = strripos($gy_data['couponInfo'],'元');
+                    $list[$k]['coupon_amount'] = substr($gy_data['couponInfo'], $pos1+3,$pos2-$pos1-3);
+                }
+                
+                //优惠券推广链接-默认链接地址，有优惠券的情况下会进行替换
+                $list[$k]['coupon_click_url'] = "https://uland.taobao.com/coupon/edetail?itemId=$num_iid&pid=$pid";
+                if ($gy_data['couponClickUrl']) {
+                    $list[$k]['coupon_click_url'] = $gy_data['couponClickUrl'];
+                }
+                
+                //佣金比率(%)
+                $list[$k]['commission_rate'] = $gy_data['maxCommissionRate'];
+                
+                //佣金
+                $list[$k]['commission'] = ($list[$k]['zk_final_price']-$list[$k]['coupon_amount'])*$list[$k]['commission_rate']/100;
+                
+                //保留2位小数，四舍五不入
+                $list[$k]['commission'] = substr(sprintf("%.3f",$list[$k]['commission']),0,-1);
 
-				//获取商品详情内容
-				$content_url='https://mdetail.tmall.com/templates/pages/desc?id='.$num_iid;
-				$list[$i]['content_url']=$content_url;
+                //商品详情页面地址
+                $list[$k]['item_url'] = $gy_data['itemUrl'];
 
-			}
-			$data=array(
-					'list'=>$list
-			);
-			$res=array(
-					'code'=>0,
-					'msg'=>'成功',
-					'data'=>$data
-			);
-		}else {
-			$res=$res_info;
+                //获取商品详情内容
+                $list[$k]['content_url'] = 'https://mdetail.tmall.com/templates/pages/desc?id='.$num_iid;;
+            }
+			$res = ['code' => 0, 'msg' => '成功', 'data' => ['list'=>$list]];
 		}
 		return $res;
 	}

@@ -501,7 +501,7 @@ class UeController extends AuthController
                 unset($list['total_num']);
 
                 // 是否开启多商户
-                $mectype = $Merch->where(['type'=>1,'settle_in'=>2])->find();
+                $mectype = $Merch->where(['type'=>1,'settle_in'=>2])->field('id')->find();
 
                 // 多商户标识
                 $ud['merchant'] = 0;
@@ -517,8 +517,8 @@ class UeController extends AuthController
                     $ud['shop'] = 1;
                     // 公告
                     $ud['desc1'] = $shopuser['desc'];
-                    $lists = $Goods->where(['shop_id'=> $shopuser['id'],'is_show'=>'Y'])->select();
-                    $ud['shop_num']  = $lists ? (int)count($lists) : 0;
+                    $lists = $Goods->where(['shop_id'=> $shopuser['id'],'is_show'=>'Y'])->count();
+                    $ud['shop_num']  = $lists ? (int)$lists : 0;
                 }
 
                 $this->ajaxSuccess(['user' => $ud, 'glist' => $list]);
