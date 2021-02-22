@@ -868,83 +868,87 @@ class LiveController extends AuthController
                 $pay_str        = '';
                 $title          = GIFT_MONEY_CN .'充值';
                 $pay_price      = $fr_one['deduct'] * 1;
-
-                if ($pay_method == 'wxpay') {
-                    // 获取微信支付表单数据
-                    Vendor('pay.wxpay','','.class.php');
-                    $wxpay              = new \wxpay();
-                    $body               = $title;
-                    $out_trade_no       = 'll_'. $order_num; // 订单号
-                    $total_fee          = $pay_price * 1;  //订单费用，精确到分
-                    $notify_url         = WEB_URL .'/app.php/WxNotify/notify_app';
-                    $AppParameters      = $wxpay->GetAppParameters($body, $out_trade_no, $total_fee, $notify_url);
-                    $pay_str            = $AppParameters;
-
-                // 获取支付宝请求参数
-                } elseif ($pay_method == 'alipay') {
-                    Vendor('pay.alipayApp','','.class.php');
-                    $alipayApp          = new \alipayApp();
-                    $body               = $title;  // 订单描述
-                    $subject            = $title;  // 订单名称，必填
-                    $out_trade_no       = 'll_'. $order_num; // 订单号
-                    $total_amount       = $pay_price * 0.01;   // 付款金额，必填
-                    $alipay_parameters  = $alipayApp->GetParameters($body, $subject, $out_trade_no, $total_amount);
-                    $pay_str            = $alipay_parameters;
-
-                // 余额支付
-                } elseif ($pay_method == 'balance' || $pay_method == 'banlance') {
-                    $UserBalanceRecord  = new \Common\Model\UserBalanceRecordModel();
-
-                    // 判断用户余额是否足够
-                    $userMsg            = $User->getUserMsg($res_token['uid']);
-
-                    if ($userMsg['balance'] >= ($pay_price * 0.01)) {
-
-                        $User->startTrans();   // 启用事务
-                        try {
-                            // 余额减
-                            $User->where(['uid' => $res_token['uid']])->setDec('balance', ($pay_price * 0.01));
-
-                            // 鹿角加
-                            $User->where(['uid' => $res_token['uid']])->setInc('ll_balance', $fr_one['redeem']);
-
-                            // 支付修改
-                            $FillRecord->where(['id' => $fr_one['id']])->save(['pay_method' => 'balance', 'is_status' => 'succ', 'pay_time' => date('Y-m-d H:i:s')]);
-
-                            // 余额日志记录
-                            $UserBalanceRecord->addLog($res_token['uid'], ($pay_price * 0.01), ($userMsg['balance'] - ($pay_price * 0.01)), 'll_add');
-
-                            // 事务提交
-                            $User->commit();
-
-                            $pay_str    = 'bal';
-
-                        } catch(\Exception $e) {
-                            // 事务回滚
-                            $User->rollback();
-
-                            // 数据库错误
-                            $this->ajaxError(['ERROR_CODE_COMMON' => 'DB_ERROR']);
+                
+                switch ($pay_method) {
+                    case 'wxpay':
+                        // 获取微信支付表单数据
+                        Vendor('pay.wxpay','','.class.php');
+                        $wxpay              = new \wxpay();
+                        $body               = $title;
+                        $out_trade_no       = 'll_'. $order_num; // 订单号
+                        $total_fee          = $pay_price * 1;  //订单费用，精确到分
+                        $notify_url         = WEB_URL .'/app.php/WxNotify/notify_app';
+                        $AppParameters      = $wxpay->GetAppParameters($body, $out_trade_no, $total_fee, $notify_url);
+                        $pay_str            = $AppParameters;
+                        break;
+                    case 'alipay':
+                        Vendor('pay.alipayApp','','.class.php');
+                        $alipayApp          = new \alipayApp();
+                        $body               = $title;  // 订单描述
+                        $subject            = $title;  // 订单名称，必填
+                        $out_trade_no       = 'll_'. $order_num; // 订单号
+                        $total_amount       = $pay_price * 0.01;   // 付款金额，必填
+                        $alipay_parameters  = $alipayApp->GetParameters($body, $subject, $out_trade_no, $total_amount);
+                        $pay_str            = $alipay_parameters;
+                        break;
+                    case 'balance':
+                    case 'banlance':
+                        $UserBalanceRecord  = new \Common\Model\UserBalanceRecordModel();
+    
+                        // 判断用户余额是否足够
+                        $userMsg            = $User->getUserMsg($res_token['uid']);
+    
+                        if ($userMsg['balance'] >= ($pay_price * 0.01)) {
+    
+                            $User->startTrans();   // 启用事务
+                            try {
+                                // 余额减
+                                $User->where(['uid' => $res_token['uid']])->setDec('balance', ($pay_price * 0.01));
+    
+                                // 鹿角加
+                                $User->where(['uid' => $res_token['uid']])->setInc('ll_balance', $fr_one['redeem']);
+    
+                                // 支付修改
+                                $FillRecord->where(['id' => $fr_one['id']])->save(['pay_method' => 'balance', 'is_status' => 'succ', 'pay_time' => date('Y-m-d H:i:s')]);
+    
+                                // 余额日志记录
+                                $UserBalanceRecord->addLog($res_token['uid'], ($pay_price * 0.01), ($userMsg['balance'] - ($pay_price * 0.01)), 'll_add');
+    
+                                // 事务提交
+                                $User->commit();
+    
+                                $pay_str    = 'bal';
+    
+                            } catch(\Exception $e) {
+                                // 事务回滚
+                                $User->rollback();
+    
+                                // 数据库错误
+                                $this->ajaxError(['ERROR_CODE_COMMON' => 'DB_ERROR']);
+                            }
+                        } else {
+                            // 余额不足
+                            $this->ajaxError(['ERROR_CODE_USER' => 'BALANCE_INSUFFICIENT']);
                         }
-                    } else {
-                        // 余额不足
-                        $this->ajaxError(['ERROR_CODE_USER' => 'BALANCE_INSUFFICIENT']);
-                    }
-                } elseif ($pay_method == 'int_wx' || $pay_method == 'int_ali') {
-                    $latipay = new LatipayController();
-                    $out_trade_no       = 'll_'.$order_num; // 订单号
-                    $total_amount       = $pay_price * 0.01;   // 付款金额，必填
-                    $alipay_parameters  = $latipay->pay($out_trade_no, $total_amount,$pay_method,2);
-                    $pay_parameters = $alipay_parameters['host_url'].'/'.$alipay_parameters['nonce'];
-                    $pay_str            = $pay_parameters;
-                } elseif ($pay_method == 'paypal') {
-                    $paypal = new PayPaiController();
-                    $out_trade_no       = 'll_'.$order_num; // 订单号
-                    $total_amount       = $pay_price * 0.01;   // 付款金额，必填
-                    $alipay_parameters  = $paypal->pay($out_trade_no, $total_amount,$pay_method,2);
-                    $pay_str            = $alipay_parameters;
+                        break;
+                    case 'int_wx':
+                    case 'int_ali':
+                        $latipay = new LatipayController();
+                        $out_trade_no       = 'll_'.$order_num; // 订单号
+                        $total_amount       = $pay_price * 0.01;   // 付款金额，必填
+                        $alipay_parameters  = $latipay->pay($out_trade_no, $total_amount,$pay_method,2);
+                        $pay_parameters = $alipay_parameters['host_url'].'/'.$alipay_parameters['nonce'];
+                        $pay_str            = $pay_parameters;
+                    break;
+                    case 'paypal':
+                        $paypal = new PayPaiController();
+                        $out_trade_no       = 'll_'.$order_num; // 订单号
+                        $total_amount       = $pay_price * 0.01;   // 付款金额，必填
+                        $alipay_parameters  = $paypal->pay($out_trade_no, $total_amount,$pay_method,2);
+                        $pay_str            = $alipay_parameters;
+                        break;
                 }
-
+                
                 if ($pay_str) {
                     $this->ajaxSuccess(['pay_parameters' => ($pay_str == 'bal' ? '' : $pay_str)]);
                 }
