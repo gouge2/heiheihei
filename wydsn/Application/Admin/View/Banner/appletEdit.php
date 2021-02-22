@@ -158,7 +158,7 @@
                                             <label class="layui-form-label" style="width: 100px;">商品来源</label>
                                             <div class="layui-input-inline">
                                                 <select class="form-control" name="g_det[from]" lay-filter="aihaos" required="required"" id="source">
-                                                <option value="" >请选择</option>
+                                                <option value="0" >请选择</option>
                                                 <foreach name="from_sel" item="vo">
                                                     <option value="{$vo.id}" <?php echo ($vo['id'] == $msg['g_det']['from']) ? 'selected' : ''; ?> >{$vo.name}</option>
                                                 </foreach>
