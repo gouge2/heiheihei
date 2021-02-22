@@ -99,11 +99,10 @@ class AuthController extends Controller
         if ($token) {
             // 判断用户身份
             $res_token = $User->checkToken($token);
+
+            // 用户身份不合法
+            if ($res_token['code'] != 0) $this->ajaxError($res_token['code'], $res_token['msg']);
             
-            if ($res_token['code'] != 0) {
-                // 用户身份不合法
-                $this->ajaxError($res_token['code'], $res_token['msg']);
-            }
 		} else {
 			// token不能为空
 			$this->ajaxError(['ERROR_CODE_USER' => 'LACK_TOKEN']);

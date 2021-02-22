@@ -31,12 +31,9 @@ class LiveRedController extends AuthController
         $where['is_status'] = array('in', [1, 2]);
         $where['room_id'] = $room_id;
         $room = $LiveRoom->where($where)->find();
-        if ($total_amount < $total) {
-            $this->ajaxError(11, '发送金额不得小于红包总数');
-        }
-        if (empty($room)) {
-            $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
-        }
+        if ($total_amount < $total) $this->ajaxError(11, '发送金额不得小于红包总数');
+        
+        if (empty($room)) $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
 
         // 查询余额是否充足
         $balance = $User->where(['uid' => $uid])->getField('ll_balance');
@@ -60,20 +57,14 @@ class LiveRedController extends AuthController
             'add_time' => date('Y-m-d H:i:s'),
             'start_time' => date("Y-m-d H:i:s", strtotime("+1 day"))
         ];
-        if ($type == 2) {
-            $map['total_amount'] = $total_amount * $total;
-        }
-
-        if (in_array($is_status, [2, 6, 7, 8])) {
-            $map['delay_time'] = date('Y-m-d H:i:s', strtotime('+3minute'));
-        }
+        if ($type == 2) $map['total_amount'] = $total_amount * $total;
+        
+        if (in_array($is_status, [2, 6, 7, 8])) $map['delay_time'] = date('Y-m-d H:i:s', strtotime('+3minute'));
 
         // 先扣除余额再创建红包
         $deductMoney = $User->where(['uid' => $uid])->setDec('ll_balance', $total_amount);
 
-        if ($deductMoney && $redModel->add($map)) {
-            $this->ajaxSuccess();
-        }
+        if ($deductMoney && $redModel->add($map)) $this->ajaxSuccess();
         $this->ajaxError(5, '创建红包失败');
     }
 
@@ -109,15 +100,11 @@ class LiveRedController extends AuthController
                 //剩余时间秒，若时间已到则返回0
                 if (in_array($v['is_status'], [2, 6, 7, 8])) {
                     $data[$k]['time_left'] = intval(strtotime($v['delay_time']) - strtotime(date('Y-m-d H:i:s')));
-                    if ($data[$k]['time_left'] <= 0) {
-                        $data[$k]['time_left'] = 0;
-                    }
+                    if ($data[$k]['time_left'] <= 0) $data[$k]['time_left'] = 0;
                 }
                 // 没抢
                 $Grabbed_type = $redDetails->where(['user_id' => $uid, 'red_id' => $v['id']])->find();
-                if ($v['effective_type'] == 1 && empty($Grabbed_type)) {
-                    $data[$k]['effective_type'] = 6;
-                }
+                if ($v['effective_type'] == 1 && empty($Grabbed_type)) $data[$k]['effective_type'] = 6;
 
                 // 没抢到
                 if ($v['effective_type'] == 2 && $Grabbed_type['amount'] == 0) {
@@ -133,9 +120,7 @@ class LiveRedController extends AuthController
 
                 // 是否已分享
                 if (in_array($v['is_status'], [4, 5, 7, 8])) {
-                    if ($redCond->where(['user_id' => $uid, 'red_id' => $v['id']])->getField('share_friends') == 1) {
-                        $data[$k]['red_share'] = 1;
-                    }
+                    if ($redCond->where(['user_id' => $uid, 'red_id' => $v['id']])->getField('share_friends') == 1) $data[$k]['red_share'] = 1;
                 }
 
                 $totalSum += (int)$v['total'];
@@ -190,9 +175,7 @@ class LiveRedController extends AuthController
         $slowHand = $redDetails->where(['red_id' => $redId, 'user_id' => $uid])->field('amount')->find();
         $username = $this->redUser($redMoneyJson['user_id'])['nickname'];
         if ($slowHand) {
-            if (empty($slowHand['amount'])) {
-                $this->ajaxSuccess( ['money' => 0, 'type' => $redMoneyJson['type'], 'nickname' => $username],'手慢了~');
-            }
+            if (empty($slowHand['amount'])) $this->ajaxSuccess( ['money' => 0, 'type' => $redMoneyJson['type'], 'nickname' => $username],'手慢了~');
             $this->ajaxError(7, '您已经抢过该红包了');
         }
         $userList = $this->redUser($uid);
@@ -257,9 +240,7 @@ class LiveRedController extends AuthController
         $userlist['received_red'] = $data['total'] - count(json_decode($data['red_money'], true)) . '/' . $data['total'];
         $whe['user_id'] = $uid;
         $userlist['grabbed'] = $redDetails->where($whe)->getField('amount');
-        if ($userlist && $red_Details) {
-            $this->ajaxSuccess(['list' => $red_Details, 'head' => $userlist]);
-        }
+        if ($userlist && $red_Details) $this->ajaxSuccess(['list' => $red_Details, 'head' => $userlist]);
         $this->ajaxError(8,'暂无红包信息');
     }
 
