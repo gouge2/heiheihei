@@ -730,7 +730,8 @@ class LiveController extends AuthController
             $LiveSite           = new \Common\Model\LiveSiteModel();
             $UserConcern        = new \Common\Model\UserConcernModel();
             $GiftGive           = new \Common\Model\GiftGiveModel();
-
+            $redModel           = new \Common\Model\LiveRedModel();
+            
             $l_one              = $LiveRoom->field('room_id,user_id')->where(['user_id' => $uid , 'room_id' => $room_id])->find();
             $ls_one             = $LiveSite->field('site_id,start_time')->where(['room_id' => $l_one['room_id']])->order('site_id desc')->find();
 
@@ -760,6 +761,12 @@ class LiveController extends AuthController
                     'trad_volume'   => $trad_volume,                            // 成交金额
                     'acc_praise'    => $room_info['praise_num'],                // 累计点赞数
                 ];
+
+                // 改直播间状态
+                $map['room_id'] = $room_id;
+                $map['heartbeat_time'] = null;
+                $map['status'] = 2;
+                $LiveRoom->heartbeat($map);
 
                 $this->ajaxSuccess($res);
 
@@ -1279,6 +1286,20 @@ class LiveController extends AuthController
         } else {
             $this->ajaxError();
         }
+    }
+    
+    // 直播心跳记录
+    public function liveHeartbeat()
+    {
+        $room_id            = I('post.room_id/d');
+        $user_id            = I('post.user_id/d');
+        if (!$room_id || !$user_id) {
+            $this->ajaxError();
+        }
+        $liveRoom = new \Common\Model\LiveRoomModel();
+        $whe = ['room_id'=>$room_id,'user_id'=>$user_id,'is_status'=>1];
+        $liveRoom->where($whe)->save(['heartbeat_time'=>date('Y-m-d H:i:s')]);
+        $this->ajaxSuccess([]);
     }
 }
 ?>

@@ -156,7 +156,7 @@ class ShortLiveGoodsModel extends Model
             // 直播回放列表展示的一个商品
             case 'record':
                 $field              = 'site_id,'. $field;
-                $sg_arr_one         = $this->find($field)->where($whe)->select();
+                $sg_arr_one         = $this->where($whe)->select();
                 $sg_arr             = $sg_arr_one ? $sg_arr_one : [];
                 break;
             // 自己传输的假列表
@@ -211,6 +211,8 @@ class ShortLiveGoodsModel extends Model
                 'from'          => 'tb',
                 'coupon_amount' => '0',
                 'commission'    => '0',
+                'critic_list'   => [],
+                'smokes'        => []
             ];
             
             // 获取商品ID组
@@ -387,8 +389,8 @@ class ShortLiveGoodsModel extends Model
 
                             if ($type == 'short') {
                                 // 获取之前的数据
-                                $goods_one['smokes']       = $temp['smokes'];
-                                $goods_one['critic_list']  = $temp['critic_list'];
+                                $goods_one['smokes']       = isset($temp['smokes']) ? $temp['smokes'] : [];
+                                $goods_one['critic_list']  = isset($temp['critic_list']) ? $temp['critic_list'] : [];
                             }
                         }
                         break;

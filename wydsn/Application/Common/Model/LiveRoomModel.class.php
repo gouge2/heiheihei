@@ -31,11 +31,11 @@ class LiveRoomModel extends Model
         }
 
         $list   = $this
-                ->field('room_id,room_name,user_id,cover_url,is_put,is_status,recent_time,sort')
-                ->where($whe)
-                ->page($page, $limit)
-                ->order('is_status asc')
-                ->select();
+            ->field('room_id,room_name,user_id,cover_url,is_put,is_status,recent_time,sort,heartbeat_time')
+            ->where($whe)
+            ->page($page, $limit)
+            ->order('is_status asc')
+            ->select();
 
         // 刷选出回放
         $recordList = [];
@@ -59,15 +59,23 @@ class LiveRoomModel extends Model
             $LiveSite       = new \Common\Model\LiveSiteModel();
             $UserConcern    = new \Common\Model\UserConcernModel();
             $Short          = new \Common\Model\ShortModel();
-
             // 其他表查询条件
             $uid_arr        = $rid_arr = [];
             $ud_list        = $ls_list = $goods_list = $uc_list = [];
-
+            
             // 循环组装其他表查询条件
             foreach ($list as $v) {
                 $uid_arr[]  = $v['user_id'];
                 $rid_arr[]  = $v['room_id'];
+                
+                // 直播心跳监控
+                if (!empty($v['heartbeat_time']) && $v['is_status'] == 1) {
+                    $map['room_id'] = $v['room_id'];
+                    $map['heartbeat_time'] = $v['heartbeat_time'];
+                    $map['status'] = 1;
+                    $res = $this->heartbeat($map);
+                    if ($res == 1) $this->getListData($whe, $at_id, $limit, $page, $platform);
+                }
             }
 
             // 用户列表
@@ -99,6 +107,7 @@ class LiveRoomModel extends Model
 
             // 循环组装参数
             foreach ($list as $key => $val) {
+                unset($val['heartbeat_time']);
                 $temp                   = $val;
                 $ad_tag                 = $val['is_status'] == 2 ? true : false;      // 假直播标识
 
@@ -302,7 +311,7 @@ class LiveRoomModel extends Model
 
             // 查询房间记录
             $whe        = ['user_id' => $uid];
-            $r_one      = $this->field('room_id,user_id,room_name,cover_url')->where($whe)->find();
+            $r_one      = $this->field('room_id,user_id,room_name,cover_url,is_status')->where($whe)->find();
 
             $Im         = new \Common\Controller\ImController();
             $User       = new \Common\Model\UserModel();
@@ -340,10 +349,16 @@ class LiveRoomModel extends Model
                         $LiveSite->where(['room_id'=>$r_one['room_id'],'end_time'=>'0000-00-00 00:00:00'])->delete();
 
                         // 添加直播场次
-                        $site_id = $LiveSite->add($ins_site);
+                        if ($r_one['is_status'] != 1 ) {
+                            $site_id = $LiveSite->add($ins_site);
 
-                        // 直播房间修改直播状态
-                        $this->where($whe)->save(['is_status' => 1, 'recent_time' => $date]);
+                            // 直播房间修改直播状态
+                            $this->where($whe)->save(['is_status' => 1, 'recent_time' => $date]);
+
+                            // 清除直播间 禁言和踢出的人
+                            live_room_handle_user($r_one['room_id'], 'clear');
+                        }
+
 
                         // 直播场次商品改为本场
                         if ($site_id) {
@@ -355,36 +370,35 @@ class LiveRoomModel extends Model
                             }
                         }
 
-                        // 清除直播间 禁言和踢出的人
-                        live_room_handle_user($r_one['room_id'], 'clear');
 
-                    // 直播断流事件
-                    } elseif ($param['event_type'] == 0) {
+
+                        // 直播断流事件
+//                    } elseif ($param['event_type'] == 0) {
                         // 直播房间修改直播状态
                         //$this->where($whe)->save(['is_status' => 3]);
 
                         // 直播场次结束
-                        $last_site= $LiveSite->where($r_whe)->order('site_id desc')->getField('site_id');
-                        $LiveSite->where(['site_id' => $last_site])->save([
-                            'end_time'      => $date,
-                            'room_heat'     => $room_info['room_heat'],
-                            'praise_num'    => $room_info['praise_num'],
-                            'acc_people'    => $room_info['acc_people'],
-                        ]);
-                        // 若该直播间存在红包没抢完情况则把红包返还给发包者
-                        $red = $redModel->where($r_whe)->field('id,user_id, red_money, effective_type')->select();
-                        if ($red) {
-                            foreach ($red as $k => $v) {
-                                $moneData = array_sum(json_decode($v['red_money'], true)) ?: 0;
-                                if (!in_array($v['effective_type'], [3,4])) {
-                                    $User->where(['uid' => $v['user_id']])->setInc('ll_balance', $moneData);
-                                    $redModel->where(['id'=>$v['id']])->save(['effective_type' => 4,'refund'=>$moneData,'start_time'=>date("Y-m-d H:i:s")]);
-                                }
-                            }
-                        }
-                        // 清除直播间缓存
-                        live_room_handle_user($r_one['room_id'], 'init');
-                    // 直播录制事件
+//                        $last_site= $LiveSite->where($r_whe)->order('site_id desc')->getField('site_id');
+//                        $LiveSite->where(['site_id' => $last_site])->save([
+//                            'end_time'      => $date,
+//                            'room_heat'     => $room_info['room_heat'],
+//                            'praise_num'    => $room_info['praise_num'],
+//                            'acc_people'    => $room_info['acc_people'],
+//                        ]);
+//                        // 若该直播间存在红包没抢完情况则把红包返还给发包者
+//                        $red = $redModel->where($r_whe)->field('id,user_id, red_money, effective_type')->select();
+//                        if ($red) {
+//                            foreach ($red as $k => $v) {
+//                                $moneData = array_sum(json_decode($v['red_money'], true)) ?: 0;
+//                                if (!in_array($v['effective_type'], [3,4])) {
+//                                    $User->where(['uid' => $v['user_id']])->setInc('ll_balance', $moneData);
+//                                    $redModel->where(['id'=>$v['id']])->save(['effective_type' => 4,'refund'=>$moneData,'start_time'=>date("Y-m-d H:i:s")]);
+//                                }
+//                            }
+//                        }
+//                        // 清除直播间缓存
+//                        live_room_handle_user($r_one['room_id'], 'init');
+                        // 直播录制事件
                     } elseif ($param['event_type'] == 100) {
                         // 获取直播场次
                         $ls_site = $LiveSite->where($r_whe)->order('site_id desc')->getField('site_id');
@@ -414,7 +428,7 @@ class LiveRoomModel extends Model
                             }
 
                             // 修改有直播回放状态
-                            $this->where(['room_id' => $r_one['room_id']])->save(['is_put' => 'Y','is_status' => 3]);
+                            $this->where(['room_id' => $r_one['room_id']])->save(['is_put' => 'Y','is_status' => 3,'heartbeat_time'=>null]);
                         }
                     }
 
@@ -444,6 +458,50 @@ class LiveRoomModel extends Model
                     }
                 }
             }
+        }
+    }
+
+    // 主播主动结束直播或心跳超时结束直播
+    public function heartbeat($data)
+    {
+        $redModel       = new \Common\Model\LiveRedModel();
+        $User           = new \Common\Model\UserModel();
+        $LiveSite       = new \Common\Model\LiveSiteModel();
+        $r_whe = ['room_id' => $data['room_id']];
+        $date = date("Y-m-d H:i:s");
+
+        // 房间信息
+        $room_info  = get_live_room_info($data['room_id']);
+
+        // 超时结束直播间
+        if ((strtotime($date) - intval(strtotime($data['heartbeat_time'])) > 15) || $data['status'] == 2) {
+
+            // 改直播间状态
+            $this->where($r_whe)->save(['is_status'=>4,'heartbeat_time'=>null]);
+
+            // 直播场次结束
+            $last_site= $LiveSite->where($r_whe)->order('site_id desc')->getField('site_id');
+            $LiveSite->where(['site_id' => $last_site])->save([
+                'end_time'      => $date,
+                'room_heat'     => $room_info['room_heat'],
+                'praise_num'    => $room_info['praise_num'],
+                'acc_people'    => $room_info['acc_people'],
+            ]);
+
+            // 若该直播间存在红包没抢完情况则把红包返还给发包者
+            $red = $redModel->where($r_whe)->field('id,user_id, red_money, effective_type')->select();
+            if ($red) {
+                foreach ($red as $key => $value) {
+                    $moneData = array_sum(json_decode($value['red_money'], true)) ?: 0;
+                    if (!in_array($value['effective_type'], [3,4])) {
+                        $User->where(['uid' => $value['user_id']])->setInc('ll_balance', $moneData);
+                        $redModel->where(['id'=>$value['id']])->save(['effective_type' => 4,'refund'=>$moneData,'start_time'=>$date]);
+                    }
+                }
+            }
+            // 清除直播间缓存
+            live_room_handle_user($data['room_id'], 'init');
+            return $data['status'];
         }
     }
 
