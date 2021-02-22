@@ -24,22 +24,16 @@ class LiveController extends AuthController
         $LiveRoom               = new \Common\Model\LiveRoomModel();
         $live_one               = $LiveRoom->field('room_id,user_id')->where(['user_id' => $uid])->find();
 
-        if ($live_one) {
-            $time               = date('Y-m-d H:i:s', ($Im::getLiveAgingTime() + $_SERVER['REQUEST_TIME']));
+        if (!$live_one) $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
+        $time               = date('Y-m-d H:i:s', ($Im::getLiveAgingTime() + $_SERVER['REQUEST_TIME']));
 
-            // 获取推流地址
-            if ($res_token['uid'] == $live_one['user_id']) {
-                $live_domain    = $Im::getLiveDomain();
-                $arr            = get_push_pull_url($live_domain['push'][0], $Im->getImSdkAppid() .'_'. $uid, $Im::getLiveKey(), $time);     // 推流地址
+        // 获取推流地址
+        if ($res_token['uid'] != $live_one['user_id']) $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_MATCHE']);
+        $live_domain    = $Im::getLiveDomain();
+        $arr            = get_push_pull_url($live_domain['push'][0], $Im->getImSdkAppid() .'_'. $uid, $Im::getLiveKey(), $time);     // 推流地址
 
-                $this->ajaxSuccess($arr);
-            } else {
-                $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_MATCHE']);
-            }
-        } else {
-            $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
-        }
-
+        $this->ajaxSuccess($arr);
+        
         $this->ajaxError();
     }
 
@@ -51,9 +45,7 @@ class LiveController extends AuthController
         $token                  = trim(I('post.token'));
         $room_id                = trim(I('post.room_id'));
 
-        if (!$room_id) {
-            $this->ajaxError();
-        }
+        if (!$room_id) $this->ajaxError();
 
         $Im 	                = new \Common\Controller\ImController();
         $model_live             = new \Common\Model\LiveRoomModel();
@@ -62,9 +54,7 @@ class LiveController extends AuthController
 
         $info                   = $model_live->where(['room_id' => $room_id])->find();
 
-        if (empty($info)) {
-            $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
-        }
+        if (empty($info)) $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
 
         $det                    = M('user_detail')->where(['user_id'=>$info['user_id']])->find();
 
@@ -74,7 +64,7 @@ class LiveController extends AuthController
         }
         $info                   = array_merge($info, $det);
 
-        $ad_tag                 = $info['is_status'] == 2 ? true : false;      // 假直播标识
+        $ad_tag                 = $info['is_status'] == 2;      // 假直播标识
 
         // 房间封面空用头像
         $info['cover_url']      = empty($info['cover_url']) ? $det['avatar'] : (!is_url($info['cover_url']) ? WEB_URL . $info['cover_url'] : $info['cover_url']);
@@ -100,9 +90,7 @@ class LiveController extends AuthController
             $time               = date('Y-m-d H:i:s', ($Im->getLiveAgingTime() + $_SERVER['REQUEST_TIME']));
             $live_domain        = $Im->getLiveDomain();
             $pull_user = $info['user_id'];
-            if (isset($room_info['tripartite']) && $room_info['tripartite'] == 1) {
-                $pull_user = $info['user_id'].'_t';
-            }
+            if (isset($room_info['tripartite']) && $room_info['tripartite'] == 1) $pull_user = $info['user_id'].'_t';
             $info['pull']       = get_push_pull_url($live_domain['pull'][0], $Im->getImSdkAppid() .'_'. $pull_user, $Im->getLivekey(), $time, false);
         }
 
@@ -119,9 +107,7 @@ class LiveController extends AuthController
         if ($red) {
             foreach ($red as $k => $v) {
                 if ($v['start_time'] > date('Y-m-d H:i:s')) {
-                    if ($v['effective_type'] == 1) {
-                        $info['live_red'] = 1;
-                    }
+                    if ($v['effective_type'] == 1) $info['live_red'] = 1;
                 } else {
                     $moneData = array_sum(json_decode($v['red_money'], true)) ?: 0;
                     if (!in_array($v['effective_type'], [3, 4])) {
@@ -157,15 +143,11 @@ class LiveController extends AuthController
                     $info['other_userid'] = $pklist['user_id'];
                 }
                 $info['time_left'] = intval(strtotime($pklist['end_time']) - strtotime(date('Y-m-d H:i:s')));
-                if ($info['time_left'] <= 0) {
-                    $info['time_left'] = 0;
-                }
+                if ($info['time_left'] <= 0) $info['time_left'] = 0;
+                
             } elseif (in_array($pklist['is_status'],[4,5,6])) {
-                if ($pklist['room_id'] == $room_id) {
-                    $info['other_userid'] = $pklist['other_uid'];
-                } else {
-                    $info['other_userid'] = $pklist['user_id'];
-                }
+                $info['other_userid'] = $pklist['user_id'];
+                if ($pklist['room_id'] == $room_id) $info['other_userid'] = $pklist['other_uid'];
             }
         }
         
@@ -181,12 +163,16 @@ class LiveController extends AuthController
         $info['is_kikc']        = in_array($uid, $handle['kikc_arr']) ? 1 : 0;  // 是否被移出房间
         $info['tripartite']     = (int)$room_info['tripartite'];
         if ($pklist && $info['is_status'] == 1 ) {
-            if ($pklist['is_status'] == 1) {
-                $info['is_action'] = 6;
-            } else if ($pklist['is_status'] == 3 &&  $info['time_left'] > 0) {
-                $info['is_action'] = 7;
-            } else {
-                $info['is_action'] = $room_info['is_action'];
+            switch ($pklist['is_status']) {
+                case 1:
+                    $info['is_action'] = 6;
+                    break;
+                case 3:
+                    if ($info['time_left'] > 0) $info['is_action'] = 7;
+                    break;
+                default:
+                    $info['is_action'] = $room_info['is_action'];
+                    break;
             }
         } else {
             $info['is_action'] = $room_info['is_action'];
@@ -294,7 +280,6 @@ class LiveController extends AuthController
             }
 
 
-            $resList             = [];
             $list                = $LiveRoom->getListData($whe, $uid, $limit, $page, $platform);
             $resList             = $list['live'] ? $list['live'] : [];
 
@@ -453,9 +438,7 @@ class LiveController extends AuthController
                         $update['cover_url']= $ud['avatar'];
                     }
                 }
-                if ($catid) {
-                    $update['cat_id'] = $catid;
-                }
+                if ($catid) $update['cat_id'] = $catid;
 
                 // 商品数组
                 if ($goods_list && is_array($goods_list)) {
@@ -486,10 +469,8 @@ class LiveController extends AuthController
                 $ShortLiveGoods->startTrans();   // 启用事务
                 try {
                     // 记录商品关联信息
-                    if ($list) {
-                        $ShortLiveGoods->addAll($list);
-                    }
-
+                    if ($list) $ShortLiveGoods->addAll($list);
+                    
                     // 修改房间信息
                     $LiveRoom->where($whe)->save($update);
 
@@ -499,9 +480,7 @@ class LiveController extends AuthController
                     // 删除缓存中多余的图片
                     if ($room_cover) {
                         foreach ($room_cover as $v) {
-                            if ($cover != $v) {
-                                @unlink($v);
-                            }
+                            if ($cover != $v) @unlink($v);
                         }
                         S('room_cover', null);
                     }
@@ -695,16 +674,16 @@ class LiveController extends AuthController
             if ($result['code'] == 'succ') {
                 $this->ajaxSuccess(['ll_balance' => $result['msg']]);
             } else {
-                if ($result['code'] == 'gift_not') {    // 礼物不存在
-                    $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_GIFT']);
-                }
-
-                if ($result['code'] == 'live_room_not') {    // 房间不存在
-                    $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
-                }
-
-                if ($result['code'] == 'money_not') {    // 余额不足
-                    $this->ajaxError(['ERROR_CODE_USER' => 'BALANCE_INSUFFICIENT']);
+                switch ($result['code']) {
+                    case 'gift_not':        // 礼物不存在
+                        $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_GIFT']);
+                        break;
+                    case 'live_room_not':   // 房间不存在
+                        $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
+                        break;
+                    case 'money_not':       // 余额不足
+                        $this->ajaxError(['ERROR_CODE_USER' => 'BALANCE_INSUFFICIENT']);
+                        break;
                 }
             }
         }
@@ -735,44 +714,41 @@ class LiveController extends AuthController
             $l_one              = $LiveRoom->field('room_id,user_id')->where(['user_id' => $uid , 'room_id' => $room_id])->find();
             $ls_one             = $LiveSite->field('site_id,start_time')->where(['room_id' => $l_one['room_id']])->order('site_id desc')->find();
 
-            if ($l_one) {
-                // 房间信息
-                $room_info      = get_live_room_info($l_one['room_id']);
-                $live_time      = isset($ls_one['start_time']) ? ($_SERVER['REQUEST_TIME'] - strtotime($ls_one['start_time'])) : $_SERVER['REQUEST_TIME'];
+            if (!$l_one) $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
+            
+            // 房间信息
+            $room_info      = get_live_room_info($l_one['room_id']);
+            $live_time      = isset($ls_one['start_time']) ? ($_SERVER['REQUEST_TIME'] - strtotime($ls_one['start_time'])) : $_SERVER['REQUEST_TIME'];
 
-                // 新增粉丝
-                $new_fans       = $UserConcern->where(['by_id' => $uid, 'add_time' => [['elt', date('Y-m-d H:i:s')], ['egt', $ls_one['start_time']]]])->count();
+            // 新增粉丝
+            $new_fans       = $UserConcern->where(['by_id' => $uid, 'add_time' => [['elt', date('Y-m-d H:i:s')], ['egt', $ls_one['start_time']]]])->count();
 
-                // 奖励信息
-                $d_ratio        = GIFT_D_RATIO;         // 鹿角转来鹿币比例
-                $cost           = GIFT_COST;            // 平台扣费百分比
-                $give_whe       = ['host_id' => $uid, 'site_id' => $ls_one['site_id'], 'is_status' => 'succ'];
-                $give_money     = $GiftGive->where($give_whe)->sum('money');
+            // 奖励信息
+            $d_ratio        = GIFT_D_RATIO;         // 鹿角转来鹿币比例
+            $cost           = GIFT_COST;            // 平台扣费百分比
+            $give_whe       = ['host_id' => $uid, 'site_id' => $ls_one['site_id'], 'is_status' => 'succ'];
+            $give_money     = $GiftGive->where($give_whe)->sum('money');
 
-                $give_award     = $give_money ? (string)($give_money * (1 - $cost * 0.01) * $d_ratio * 0.01) : '0';
-                $trad_volume    =  '0';
+            $give_award     = $give_money ? (string)($give_money * (1 - $cost * 0.01) * $d_ratio * 0.01) : '0';
+            $trad_volume    =  '0';
 
-                $res            = [
-                    'live_time'     => date('H:i:s', $live_time),               // 直播时长
-                    'acc_people'    => $room_info['acc_people'],                // 累计人数
-                    'give_award'    => $give_award,                             // 打赏奖励
-                    'tall_heat'     => $room_info['room_heat'],                 // 最高热度
-                    'new_fans'      => $new_fans ? (string)$new_fans : '0',     // 新增粉丝
-                    'trad_volume'   => $trad_volume,                            // 成交金额
-                    'acc_praise'    => $room_info['praise_num'],                // 累计点赞数
-                ];
+            $res            = [
+                'live_time'     => date('H:i:s', $live_time),               // 直播时长
+                'acc_people'    => $room_info['acc_people'],                // 累计人数
+                'give_award'    => $give_award,                             // 打赏奖励
+                'tall_heat'     => $room_info['room_heat'],                 // 最高热度
+                'new_fans'      => $new_fans ? (string)$new_fans : '0',     // 新增粉丝
+                'trad_volume'   => $trad_volume,                            // 成交金额
+                'acc_praise'    => $room_info['praise_num'],                // 累计点赞数
+            ];
 
-                // 改直播间状态
-                $map['room_id'] = $room_id;
-                $map['heartbeat_time'] = null;
-                $map['status'] = 2;
-                $LiveRoom->heartbeat($map);
+            // 改直播间状态
+            $map['room_id'] = $room_id;
+            $map['heartbeat_time'] = null;
+            $map['status'] = 2;
+            $LiveRoom->heartbeat($map);
 
-                $this->ajaxSuccess($res);
-
-            } else {
-                $this->ajaxError(['ERROR_CODE_LIVE' => 'NOT_EXIST']);
-            }
+            $this->ajaxSuccess($res);
         }
 
         $this->ajaxError();
@@ -1081,17 +1057,8 @@ class LiveController extends AuthController
 
 
             if ($host_id && $uid) {
-                // 连麦
-                if ($type == 'link') {
-                    // 本房间主播才可以调起混流
-                    if ($host_id == $res_token['uid']) {
-                        $res= $Tencent::customWheat($host_id, $uid);
-                    }
-
-                // 取消混流
-                } else {
-                    $res    = $Tencent::cancelMixture($host_id, $uid);
-                }
+                // 连麦 或 取消混流
+                $res = ($type == 'link' && $host_id == $res_token['uid']) ?  $Tencent::customWheat($host_id, $uid) : $Tencent::cancelMixture($host_id, $uid);
 
                 if (isset($res) && $res == 'ok') {
                     $this->ajaxSuccess();
@@ -1120,16 +1087,9 @@ class LiveController extends AuthController
             $this->verifyUserToken($token, $User, $res_token);
 
             $Tencent        = new \Common\Controller\TencentController();
-
-            // pk
-            if ($type == 'pk') {
-                $res        = $Tencent::hostPk($res_token['uid'], $link_id);
-
-            // 取消混流
-            } else {
-                $res        = $Tencent::cancelMixture($res_token['uid'], $link_id);
-            }
-
+            
+            $res = ($type == 'pk') ? $Tencent::hostPk($res_token['uid'], $link_id) : $Tencent::cancelMixture($res_token['uid'], $link_id);
+            
             if ($res == 'ok') {
                 $this->ajaxSuccess();
 
@@ -1233,17 +1193,11 @@ class LiveController extends AuthController
         if (in_array($pkList['is_status'], [1, 2, 3, 4]) && !$type) {
             $result = $pkList['money'] - $pkList['other_money'];
             if ($result > 0) {
-                if ( $room_id == $pkList['room_id']) {
-                    $result = 1;
-                } else {
-                    $result = 2;
-                }
+                $result = 2;
+                if ( $room_id == $pkList['room_id']) $result = 1;
             } elseif ($result < 0) {
-                if ($room_id == $pkList['room_id']) {
-                    $result = 2;
-                } else {
-                    $result = 1;
-                }
+                $result = 2;
+                if ($room_id != $pkList['room_id']) $result = 1;
             } else {
                 $result = 3;    //平局
                 $LivePkRecord->where(['id' => $pkList['id']])->save(['is_status' => 4]);
@@ -1251,9 +1205,7 @@ class LiveController extends AuthController
             // pk结果
             if ($pkList['is_status'] == 1 ) {
                 // pk惩罚
-                if ($result != 3) {
-                    $LivePkRecord->where(['id' => $pkList['id']])->save(['is_status' => 3, 'end_time' => date('Y-m-d H:i:s', strtotime('+5minute'))]);
-                }
+                if ($result != 3) $LivePkRecord->where(['id' => $pkList['id']])->save(['is_status' => 3, 'end_time' => date('Y-m-d H:i:s', strtotime('+5minute'))]);
             }
 
             // 结果信息整理
