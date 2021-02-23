@@ -179,11 +179,7 @@ function preg_match_chinese($keyword)
 {
     $pattern = '/[\x{4e00}-\x{9fa5}]/u';
     preg_match($pattern, $keyword, $res);
-    if (!empty($res)) {
-        return false;
-    } else {
-        return true;
-    }
+    return $res ? true : false;
 }
 
 /**
@@ -195,11 +191,7 @@ function is_positive_int($keyword)
 {
     $pattern = '/^[1-9]\d*$/';
     preg_match($pattern, $keyword, $res);
-    if (!empty($res)) {
-        return true;
-    } else {
-        return false;
-    }
+    return $res ? true : false;
 }
 
 /**
@@ -211,11 +203,7 @@ function is_natural_num($keyword)
 {
     $pattern = '/^\d*$/';
     preg_match($pattern, $keyword, $res);
-    if (!empty($res)) {
-        return true;
-    } else {
-        return false;
-    }
+    return $res ? true : false;
 }
 
 /**
@@ -227,11 +215,7 @@ function is_decimal($keyword)
 {
     $pattern = '/^(0\.)\d*[1-9]\d*$/';
     preg_match($pattern, $keyword, $res);
-    if (!empty($res)) {
-        return true;
-    } else {
-        return false;
-    }
+    return $res ? true :false;
 }
 
 /**
@@ -243,11 +227,7 @@ function is_currency($keyword)
 {
     $pattern = '/^\d+(\.\d+)?$/';
     preg_match($pattern, $keyword, $res);
-    if (!empty($res)) {
-        return true;
-    } else {
-        return false;
-    }
+    return $res ? true : false;
 }
 
 /**
@@ -259,15 +239,12 @@ function is_currency($keyword)
 function is_datetime($datetime, $formats = array("Y-m-d H:i:s", "Y/m/d H:i:s"))
 {
     $unixTime = strtotime($datetime);
-    if (!$unixTime) {
+    if (!$unixTime) return false;
         //strtotime转换不对，日期格式显然不对。
-        return false;
-    }
+    
     //校验日期的有效性，只要满足其中一个格式就OK
     foreach ($formats as $format) {
-        if (date($format, $unixTime) == $datetime) {
-            return true;
-        }
+        if (date($format, $unixTime) == $datetime) return true;
     }
     return false;
 }
@@ -281,15 +258,12 @@ function is_datetime($datetime, $formats = array("Y-m-d H:i:s", "Y/m/d H:i:s"))
 function is_date($date, $formats = array("Y-m-d", "Y/m/d"))
 {
     $unixTime = strtotime($date);
-    if (!$unixTime) {
-        //strtotime转换不对，日期格式显然不对。
-        return false;
-    }
+    //strtotime转换不对，日期格式显然不对。
+    if (!$unixTime) return false;
+    
     //校验日期的有效性，只要满足其中一个格式就OK
     foreach ($formats as $format) {
-        if (date($format, $unixTime) == $date) {
-            return true;
-        }
+        if (date($format, $unixTime) == $date) return true;
     }
     return false;
 }
@@ -301,16 +275,8 @@ function is_date($date, $formats = array("Y-m-d", "Y/m/d"))
  */
 function is_phone($keyword)
 {
-    if (strlen($keyword) == 11) {
-        $pattern = '/1[3578]\d{9}|1[47|66|77|88|91|98|99]\d{8}/';
-        if (preg_match($pattern, $keyword)) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
-    }
+    $pattern = '/1[3578]\d{9}|1[47|66|77|88|91|98|99]\d{8}/';
+    return strlen($keyword) == 11 && (preg_match($pattern, $keyword));
 }
 
 /**
@@ -321,11 +287,7 @@ function is_phone($keyword)
 function is_email($keyword)
 {
     $pattern = '/^[\dA-Za-z]+[\-_\.]?[\dA-Za-z]*@([\da-zA-Z]+[\-_]?[\dA-Za-z]*\.[a-z]{2,3}(\.[a-z]{2})?)$/i';
-    if (preg_match($pattern, $keyword)) {
-        return true;
-    } else {
-        return false;
-    }
+    return (preg_match($pattern, $keyword)) ? true : false;
 }
 
 /**
@@ -337,11 +299,7 @@ function is_url($keyword)
 {
     $pattern = '/^http(s?):\/\/(?:[A-za-z0-9-]+\.)+[A-za-z]{2,4}(:\d+)?(?:[\/\?#][\/=\?%\-&~`@[\]\':+!\.#\w]*)?$/';
     preg_match($pattern, $keyword, $res);
-    if (!empty($res)) {
-        return true;
-    } else {
-        return false;
-    }
+    return $res ? true : false;
 }
 
 /**
@@ -531,8 +489,8 @@ function getCityByIp()
     if ($ip !== '127.0.0.1') {
         //调用淘宝IP地址库
         $url = "http://ip.taobao.com/service/getIpInfo.php?ip=$ip";
-        $data = file_get_contents($url); //调用淘宝接口获取信息
-        return $data;
+        //调用淘宝接口获取信息
+        return file_get_contents($url);
     } else {
         return false;
     }
@@ -1004,9 +962,8 @@ function birthday($birthday)
 {
     $age = strtotime($birthday);
 
-    if ($age === false) {
-        return 0;
-    }
+    if ($age === false) return 0;
+    
 
     list($y1, $m1, $d1) = explode("-", date("Y-m-d", $age));
     $now = strtotime("now");
@@ -1484,9 +1441,9 @@ function addvtorandp($array, $ad_list)
 
 /**
  * 生成红包数组
- * @param $total 金额
- * @param $num 红包个数
- * @param $type 红包类型 1 拼手气，2普通
+ * @param $total:金额
+ * @param $num:红包个数
+ * @param $type:1 随机，2 普通
  * @return array
  */
 function getRedGift($total, $num, $type)
