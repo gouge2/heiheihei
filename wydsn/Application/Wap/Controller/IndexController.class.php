@@ -17,8 +17,7 @@ class IndexController extends Controller
     	//$ip=getIP();
     	$ip='';
     	//获取用户所绑定的推广位
-    	$pid='';
-    	$relationId='';
+        $relationId='';
     	$User=new \Common\Model\UserModel();
     	$userMsg=$User->getUserMsg($uid);
     	$this->assign('auth_code',$userMsg['auth_code']);
@@ -124,11 +123,7 @@ class IndexController extends Controller
     	switch ($id)
     	{
     		//来鹿商城安装使用教程
-    		case '1':
-    			$file='install.mp4';
-    			$title='来鹿商城安装使用教程';
-    			break;
-    		//来鹿商城网购使用教程
+            //来鹿商城网购使用教程
     		case '2':
     			$file='buy.mp4';
     			$title='来鹿商城网购使用教程';
