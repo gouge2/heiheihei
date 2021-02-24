@@ -293,6 +293,7 @@ class LiveRoomModel extends Model
 
     /**
      * 直播处理回调事件
+     * 只有第三方推流完全依赖腾讯云回调来控制开关直播间
      */
     public function processFlow($param)
     {
@@ -327,17 +328,15 @@ class LiveRoomModel extends Model
                 $this->startTrans();   // 启用事务
                 try {
                     // 直播推流事件
-                    if ($param['event_type'] == 1) {
+                    if ($param['event_type'] == 1 && isset($arr[2])) {
                         // 三方推流
-                        if (isset($arr[2])) {
-                            $ah 	= $User->checkAuthority('live', $uid);  // 检查开播等级是否达到
-                            if ($ah['code'] == 0) {
-                                get_live_room_info($r_one['room_id'], 'init');
-                                // 创建IM群
-                                $Im::userIdAdd($uid);
-                                $Im::createLiveGroup($r_one['room_id'], $uid);
-                                get_live_room_info($r_one['room_id'], 'tripartite', 1);
-                            }
+                        $ah 	= $User->checkAuthority('live', $uid);  // 检查开播等级是否达到
+                        if ($ah['code'] == 0) {
+                            get_live_room_info($r_one['room_id'], 'init');
+                            // 创建IM群
+                            $Im::userIdAdd($uid);
+                            $Im::createLiveGroup($r_one['room_id'], $uid);
+                            get_live_room_info($r_one['room_id'], 'tripartite', 1);
                         }
                         // 直播场次记录
                         $ins_site = [
@@ -373,31 +372,17 @@ class LiveRoomModel extends Model
 
 
                         // 直播断流事件
-//                    } elseif ($param['event_type'] == 0) {
-                        // 直播房间修改直播状态
-                        //$this->where($whe)->save(['is_status' => 3]);
-
+                    } elseif ($param['event_type'] == 0 && isset($arr[2])) {
                         // 直播场次结束
-//                        $last_site= $LiveSite->where($r_whe)->order('site_id desc')->getField('site_id');
-//                        $LiveSite->where(['site_id' => $last_site])->save([
-//                            'end_time'      => $date,
-//                            'room_heat'     => $room_info['room_heat'],
-//                            'praise_num'    => $room_info['praise_num'],
-//                            'acc_people'    => $room_info['acc_people'],
-//                        ]);
-//                        // 若该直播间存在红包没抢完情况则把红包返还给发包者
-//                        $red = $redModel->where($r_whe)->field('id,user_id, red_money, effective_type')->select();
-//                        if ($red) {
-//                            foreach ($red as $k => $v) {
-//                                $moneData = array_sum(json_decode($v['red_money'], true)) ?: 0;
-//                                if (!in_array($v['effective_type'], [3,4])) {
-//                                    $User->where(['uid' => $v['user_id']])->setInc('ll_balance', $moneData);
-//                                    $redModel->where(['id'=>$v['id']])->save(['effective_type' => 4,'refund'=>$moneData,'start_time'=>date("Y-m-d H:i:s")]);
-//                                }
-//                            }
-//                        }
-//                        // 清除直播间缓存
-//                        live_room_handle_user($r_one['room_id'], 'init');
+                        $last_site= $LiveSite->where($r_whe)->order('site_id desc')->getField('site_id');
+                        $LiveSite->where(['site_id' => $last_site])->save([
+                            'end_time'      => $date,
+                            'room_heat'     => $room_info['room_heat'],
+                            'praise_num'    => $room_info['praise_num'],
+                            'acc_people'    => $room_info['acc_people'],
+                        ]);
+                        // 清除直播间缓存
+                        live_room_handle_user($r_one['room_id'], 'init');
                         // 直播录制事件
                     } elseif ($param['event_type'] == 100) {
                         // 获取直播场次

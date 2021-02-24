@@ -438,7 +438,11 @@ class LiveController extends AuthController
                         $update['cover_url']= $ud['avatar'];
                     }
                 }
-                if ($catid) $update['cat_id'] = $catid;
+                if ($catid) {
+                    $update['cat_id'] = $catid;
+                }
+
+                $date = date('Y-m-d H:i:s');
 
                 // 商品数组
                 if ($goods_list && is_array($goods_list)) {
@@ -454,7 +458,7 @@ class LiveController extends AuthController
                                     'user_id'   => $uid,
                                     'from'      => $from,
                                     'type'      => 'live',
-                                    'add_time'  => date('Y-m-d H:i:s'),
+                                    'add_time'  => $date,
                                 ];
 
                                 $list_tag[]     = $tem;
@@ -469,10 +473,41 @@ class LiveController extends AuthController
                 $ShortLiveGoods->startTrans();   // 启用事务
                 try {
                     // 记录商品关联信息
-                    if ($list) $ShortLiveGoods->addAll($list);
-                    
+                    if ($list) {
+                        $ShortLiveGoods->addAll($list);
+                    }
+
                     // 修改房间信息
+                    $update['is_status'] = 1;
+                    $update['recent_time'] = $date;
                     $LiveRoom->where($whe)->save($update);
+
+                    // 直播场次记录
+                    $ins_site = [
+                        'room_id'       => $l_one['room_id'],
+                        'start_time'    => $date,
+                    ];
+
+                    // 清除无效重复直播场次
+                    $LiveSite       = new \Common\Model\LiveSiteModel();
+                    $LiveSite->where(['room_id' => $l_one['room_id'],'end_time' => '0000-00-00 00:00:00'])->delete();
+
+                    // 添加直播场次
+                    $site_id = $LiveSite->add($ins_site);
+
+                    // 清除直播间 禁言和踢出的人
+                    live_room_handle_user($l_one['room_id'], 'clear');
+
+
+                    // 直播场次商品改为本场
+                    if ($site_id) {
+                        $slg_whe    = ['user_id' => $uid, 'site_id' => 0, 'type' => 'live'];
+                        $slg_id     = $ShortLiveGoods->getVal($slg_whe, 'id', true);
+                        if ($slg_id) {
+                            $ShortLiveGoods->where(['id' => ['in', $slg_id]])->save(['site_id' => $site_id]);
+                        }
+                    }
+
 
                     // 事务提交
                     $ShortLiveGoods->commit();
@@ -480,7 +515,9 @@ class LiveController extends AuthController
                     // 删除缓存中多余的图片
                     if ($room_cover) {
                         foreach ($room_cover as $v) {
-                            if ($cover != $v) @unlink($v);
+                            if ($cover != $v) {
+                                @unlink($v);
+                            }
                         }
                         S('room_cover', null);
                     }
