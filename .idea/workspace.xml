@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94942d76-bd76-4150-ab24-5d48a78ed7b6" name="默认变更列表" comment="">
+    <list default="true" id="a08238cd-c3da-4d21-92cf-2758056f0dbb" name="默认变更列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/面试题.md" beforeDir="false" afterPath="$PROJECT_DIR$/面试题.md" afterDir="false" />
     </list>
@@ -17,7 +17,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1pHfYCYhQdX88aqe8pROceQCpjw" />
+  <component name="ProjectId" id="1pKGzw0E0IMDPUEqSkA15yoHcAi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -32,18 +32,17 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="94942d76-bd76-4150-ab24-5d48a78ed7b6" name="默认变更列表" comment="" />
-      <created>1614844981697</created>
+      <changelist id="a08238cd-c3da-4d21-92cf-2758056f0dbb" name="默认变更列表" comment="" />
+      <created>1614924633726</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1614844981697</updated>
-      <workItem from="1614844982793" duration="4737000" />
+      <updated>1614924633726</updated>
+      <workItem from="1614924634852" duration="1954000" />
     </task>
     <servers />
   </component>
