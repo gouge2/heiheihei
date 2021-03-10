@@ -433,6 +433,8 @@ static 可以用于静态或非静态方法中，也可以访问类的静态属�
 1、500 Inter Server Error：表示服务器在执行请求时发生了错误，也有可能是web应用存在的bug或某些临时的错误时；
 
 2、503 Server Unavailable：表示服务器暂时处于超负载或正在进行停机维护，无法处理请求；
+
+获取更多状态码可进网址：https://www.php.cn/course/1020.html
 ```
 #### 进阶篇
 
@@ -1105,6 +1107,9 @@ select * from user where rand() limit 10;
 ##### 5、对比框架区别几个方向点
 - 是否纯 `OOP`
 - 类库加载方式（自己写 `autoload` 对比 `composer` 标准）
+```
+都属于自动加载机制，composer 的vendor下会有个autoload.php文件做自动加载
+```
 - 易用性方向（`CI` 基础框架，`Laravel` 这种就是高开发效率框架以及基础组件多少）
 - 黑盒（相比 `C` 扩展系）
 - 运行速度（如：`Laravel` 加载一大堆东西）
