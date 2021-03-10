@@ -879,59 +879,64 @@ class BbsArticleController extends AuthController
             'articleName' => '',
             'articleTitle' => ''
         );
-        if ($source == 1) {
-            // 查询淘宝商品名称
-            $ret['articleName'] = 'taobao_' . $article_id;
-            Vendor('tbk.tbk', '', '.class.php');
-            $tbk = new \tbk();
-            $res_goods = $tbk->getItemInfo($article_id, $platform = '2', $ip = '');
-            if ($res_goods['code'] == 0) {
-                $ret['articleTitle'] = $res_goods['data']['title'];
-            } else {
-                return false;
-            }
-        } elseif ($source == 2) {
-            // 查询京东商品名称
-            $ret['articleName'] = 'jingdong_' . $article_id;
-            $url = "http://jdapi.vephp.com/iteminfo?skuids=$article_id";
-            $res_json = https_request($url);
-            $res_g = json_decode($res_json, true);
-            $ret['articleTitle'] = $res_g['data'][0]['goodsName'];
-            if (!$ret['articleTitle']) {
-                return false;
-            }
-        } elseif ($source == 3) {
-            // 查询拼多多商品名称
-            $ret['articleName'] = 'pdd_' . $article_id;
-            //获取商品列表
-            Vendor('pdd.pdd', '', '.class.php');
-            $pdd = new \pdd();
-            $goods_id_str = '[' . $article_id . ']';
-            $res_goods = $pdd->getGoodsDetail($goods_id_str);
-            if ($res_goods['code'] == 0) {
-                $ret['articleTitle'] = $res_goods['data']['goods_details']['goods_name'];
-            } else {
-                return false;
-            }
-        } elseif ($source == 4) {
-            // 查询拼多多商品名称
-            $ret['articleName'] = 'vip_' . $article_id;
-            //获取商品列表
-            Vendor('vip.vip', '', '.class.php');
-            $vip = new \vip();
-            $goods_id_str = array($article_id);
-            $res_goods = $vip->getGoodsDetail($goods_id_str);
-            if ($res_goods['code'] == 0) {
-                $ret['articleTitle'] = $res_goods['data']['goods_details']['goodsName'];
-            } else {
-                return false;
-            }
-
-        } elseif ($source == 5) {
-            $res = M('goods')->where(['goods_id' => $article_id])->find();
-            if (!$res) {
-                return false;
-            }
+        switch ($source) {
+            case 1:
+                // 查询淘宝商品名称
+                $ret['articleName'] = 'taobao_' . $article_id;
+                Vendor('tbk.tbk', '', '.class.php');
+                $tbk = new \tbk();
+                $res_goods = $tbk->getItemInfo($article_id, $platform = '2', $ip = '');
+                if ($res_goods['code'] == 0) {
+                    $ret['articleTitle'] = $res_goods['data']['title'];
+                } else {
+                    return false;
+                }
+                break;
+            case 2:
+                // 查询京东商品名称
+                $ret['articleName'] = 'jingdong_' . $article_id;
+                $url = "http://jdapi.vephp.com/iteminfo?skuids=$article_id";
+                $res_json = https_request($url);
+                $res_g = json_decode($res_json, true);
+                $ret['articleTitle'] = $res_g['data'][0]['goodsName'];
+                if (!$ret['articleTitle']) {
+                    return false;
+                }
+                break;
+            case 3:
+                // 查询拼多多商品名称
+                $ret['articleName'] = 'pdd_' . $article_id;
+                //获取商品列表
+                Vendor('pdd.pdd', '', '.class.php');
+                $pdd = new \pdd();
+                $goods_id_str = '[' . $article_id . ']';
+                $res_goods = $pdd->getGoodsDetail($goods_id_str);
+                if ($res_goods['code'] == 0) {
+                    $ret['articleTitle'] = $res_goods['data']['goods_details']['goods_name'];
+                } else {
+                    return false;
+                }
+                break;
+            case 4:
+                // 查询拼多多商品名称
+                $ret['articleName'] = 'vip_' . $article_id;
+                //获取商品列表
+                Vendor('vip.vip', '', '.class.php');
+                $vip = new \vip();
+                $goods_id_str = array($article_id);
+                $res_goods = $vip->getGoodsDetail($goods_id_str);
+                if ($res_goods['code'] == 0) {
+                    $ret['articleTitle'] = $res_goods['data']['goods_details']['goodsName'];
+                } else {
+                    return false;
+                }
+                break;
+            case 5:
+                $res = M('goods')->where(['goods_id' => $article_id])->find();
+                if (!$res) {
+                    return false;
+                }
+                break;
         }
 
         return $ret;
@@ -945,32 +950,37 @@ class BbsArticleController extends AuthController
      */
     public function checkArticleShop($source,$article_id)
     {
-        if ($source == 'tb') {
-            Vendor('tbk.tbk', '', '.class.php');
-            $tbk = new \tbk();
-            $res = $tbk->getItemDetail($article_id, $platform = '2', '', $pid = '');
-            if ($res['code'] !== 0) {
-                return false;
-            }
-        } elseif ($source == 'jd') {
-            $Jingtuitui = new JingtuituiController();
-            $res = $Jingtuitui::getGoodsDet($article_id);
-            if (!$res) {
-                return false;
-            }
-        } elseif ($source == 'pdd') {
-            $goods_id_list 	= "[$article_id]";
-            Vendor('pdd.pdd', '', '.class.php');
-            $pdd = new \pdd();
-            $res = $pdd->getGoodsDetail($goods_id_list);
-            if ($res['code'] !== 0) {
-                return false;
-            }
-        } elseif ($source == 'self') {
-            $res = M('goods')->where(['goods_id' => $article_id])->find();
-            if (!$res) {
-                return false;
-            }
+        switch ($source) {
+            case 'tb':
+                Vendor('tbk.tbk', '', '.class.php');
+                $tbk = new \tbk();
+                $res = $tbk->getItemDetail($article_id, $platform = '2', '', $pid = '');
+                if ($res['code'] !== 0) {
+                    return false;
+                }
+                break;
+            case 'jd':
+                $Jingtuitui = new JingtuituiController();
+                $res = $Jingtuitui::getGoodsDet($article_id);
+                if (!$res) {
+                    return false;
+                }
+                break;
+            case "pdd":
+                $goods_id_list 	= "[$article_id]";
+                Vendor('pdd.pdd', '', '.class.php');
+                $pdd = new \pdd();
+                $res = $pdd->getGoodsDetail($goods_id_list);
+                if ($res['code'] !== 0) {
+                    return false;
+                }
+                break;
+            case 'self':
+                $res = M('goods')->where(['goods_id' => $article_id])->find();
+                if (!$res) {
+                    return false;
+                }
+                break;
         }
 
         return true;
