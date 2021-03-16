@@ -925,20 +925,46 @@ GIT的内容存储使用的是SHA-1哈希算法。这能确保代码内容的完
 #### 数据库篇
 
 ##### 1、MySQL
-- 索引、联合索引（命中条件）
+- 创建数据库
 ```
+ create database myapp CHARSET utf8
+```
+- 创建数据表
+```
+CREATE TABLE person (number INT(11),name VARCHAR(255),birthday DATE);
+```
+- 删除数据库
+```
+ drop database myapp
+```
+- 删除数据表
+```
+DROP TABLE person
+```
+- 索引、联合索引（命中条件）
+
 索引是存储引擎用于快速找到记录的一种数据结构,对经常使用增删改的数据表、或者重复率较高的字段、或者表记录较少的情况下尽量不使用索引
 索引创建
-ALTER TABLE `table_name` ADD INDEX index_name (`column`); #普通索引
-
-ALTER TABLE `table_name` ADD UNIQUE (`column`); #唯一索引
-
-ALTER TABLE `table_name` ADD PRIMARY KEY (`column`); #主键索引
-
-ALTER TABLE `table_name` ADD FULLTEXT (`column`); #全文索引
-
-ALTER TABLE `table_name` ADD INDEX index_name (`column1`, `column2`, `column3`); #组合索引
-
+#普通索引
+```
+ALTER TABLE `table_name` ADD INDEX index_name (`column`); 
+```
+#唯一索引
+```
+ALTER TABLE `table_name` ADD UNIQUE (`column`); 
+```
+#主键索引
+```
+ALTER TABLE `table_name` ADD PRIMARY KEY (`column`); 
+```
+#全文索引
+```
+ALTER TABLE `table_name` ADD FULLTEXT (`column`); 
+```
+#组合索引
+```
+ALTER TABLE `table_name` ADD INDEX index_name (`column1`, `column2`, `column3`); 
+```
 索引区别
 
 普通索引：最基本的索引，没有任何限制
@@ -952,7 +978,7 @@ ALTER TABLE `table_name` ADD INDEX index_name (`column1`, `column2`, `column3`);
 组合索引：为了更多的提高 MySQL 效率可建立组合索引，遵循"最左前缀"原则
 
 联合索引：又称复合索引，如果同一张表的两个字段一起作为查询条件次数比较多的情况下，使用联合索引效率更高
-```
+
 - 分库分表（水平分表、垂直分表）
 - 分区
 - 会使用 `explain` 分析 `SQL` 性能问题，了解各参数含义
