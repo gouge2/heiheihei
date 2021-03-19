@@ -59,7 +59,7 @@ class Account extends \We7Table {
             'endtime' => 0,
             'send_account_expire_status' => 0,
             'send_api_expire_status' => 0,
-            'name' => '来鹿团队',
+            'name' => '翠花团队',
             'description' => '一个朝气蓬勃的团队'
         ];
 	}

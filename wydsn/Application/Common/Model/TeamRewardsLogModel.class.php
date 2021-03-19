@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 http://www.lailu.shop
+ * by 翠花 http://www.lailu.shop
  * 会员授权/邀请码管理
  */
 namespace Common\Model;

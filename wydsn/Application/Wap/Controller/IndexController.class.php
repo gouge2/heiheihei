@@ -122,15 +122,15 @@ class IndexController extends Controller
     	layout(false);
     	switch ($id)
     	{
-    		//来鹿商城安装使用教程
-            //来鹿商城网购使用教程
+    		//翠花商城安装使用教程
+            //翠花商城网购使用教程
     		case '2':
     			$file='buy.mp4';
-    			$title='来鹿商城网购使用教程';
+    			$title='翠花商城网购使用教程';
     			break;
     		default:
     			$file='install.mp4';
-    			$title='来鹿商城安装使用教程';
+    			$title='翠花商城安装使用教程';
     			break;
     	}
     	$this->assign('file',$file);

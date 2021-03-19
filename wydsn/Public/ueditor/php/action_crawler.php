@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 http://www.lailu.shop
+ * by 翠花 http://www.lailu.shop
  * 抓取远程图片
  * User: 小杨
  * Date: 2020-04-14

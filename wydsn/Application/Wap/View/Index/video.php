@@ -9,7 +9,7 @@
 <title>{$web_title}-<?php echo WEB_TITLE;?></title>
 <meta name="keywords" content="{$web_keywords}" />
 <meta name="description" content="{$web_description}" />
-<meta name="author" content="深圳来鹿科技有限公司" />
+<meta name="author" content="深圳翠花科技有限公司" />
 <body>
 <video width="100%" height="100%" controls>
   <source src="__PUBLIC__/{$file}" type="video/mp4">

@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 http://www.lailu.shop
+ * by 翠花 http://www.lailu.shop
  * 多媒体文件客户端
  * @author yikai.hu
  * @version $Id: AlipayMobilePublicMultiMediaClient.php, v 0.1 Aug 15, 2014 10:19:01 AM yikai.hu Exp $

@@ -57,7 +57,7 @@
     }
     
     //标注点数组
-    var markerArr = [{title:"深圳来鹿科技有限公司",content:"地址：<br/>电话：<br/>邮箱：admin@lailu.cn（文件接收）&nbsp;admin@lailu.cn（业务合作）",point:"118.810762|32.035802",isOpen:1,icon:{w:21,h:21,l:0,t:0,x:6,lb:5}}
+    var markerArr = [{title:"深圳翠花科技有限公司",content:"地址：<br/>电话：<br/>邮箱：admin@lailu.cn（文件接收）&nbsp;admin@lailu.cn（业务合作）",point:"118.810762|32.035802",isOpen:1,icon:{w:21,h:21,l:0,t:0,x:6,lb:5}}
 		 ];
     //创建marker
     function addMarker(){

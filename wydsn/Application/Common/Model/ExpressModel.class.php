@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  * 快递查询类 v1.0
  * @copyright        福星高照
  * @lastmodify       2014-08-22

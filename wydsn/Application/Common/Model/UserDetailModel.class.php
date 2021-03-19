@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 http://www.lailu.shop
+ * by 翠花 http://www.lailu.shop
  * 会员详细信息管理类
  */
 namespace Common\Model;
@@ -106,7 +106,7 @@ class UserDetailModel extends Model
             }
 			$msg['likes_num'] 	= (int) $like_list ?: 0;
 
-			// 来鹿号
+			// 翠花号
 			$ll = $UserAuthCode->getMsg($whe);
 			$msg['ll_no'] 		= $ll ? $ll['auth_code'] : '';
 
@@ -192,7 +192,7 @@ class UserDetailModel extends Model
 	}
 
 	/**
-	 * 用户ID搜索 或者 来鹿号搜索
+	 * 用户ID搜索 或者 翠花号搜索
 	 */
 	public function uIdOrDeer($u_str)
 	{

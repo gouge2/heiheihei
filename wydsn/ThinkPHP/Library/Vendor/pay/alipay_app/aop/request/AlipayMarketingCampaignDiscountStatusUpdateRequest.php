@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  * ALIPAY API: alipay.marketing.campaign.discount.status.update request
  *
  * @author auto create

@@ -207,7 +207,7 @@ function delDir($dir) {
 </head>
 <body>
 <div class="container" style="margin-top:9%;">
-    <center><h1>系统更新升级助手</h1><h3>来鹿</h3></center>
+    <center><h1>系统更新升级助手</h1><h3>翠花</h3></center>
     <div class="jumbotron">
         <?php if($is_update){ ?>
             <p><h3>您当前版本是<font color="red"><?php echo SERVER_VERSION;?></font>，系统最新版本是<font color="red"><?php echo $last_version; ?></font>，请立即升级!</h3></p>

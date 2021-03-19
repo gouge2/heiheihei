@@ -37,7 +37,7 @@ switch (CONTROLLER_NAME.'/'.ACTION_NAME)
    </dl>
   </li>
   <li>
-   <p class="btm_infor">© 来鹿 版权所有</p>
+   <p class="btm_infor">© 翠花 版权所有</p>
   </li>
  </ul>
 </aside>

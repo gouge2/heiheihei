@@ -170,7 +170,7 @@
                                             <label class="layui-form-label" style="width: 10%;">平台邀请码名称</label>
                                             <div class="layui-input-block">
                                                 <input type="text" class="layui-input" name="platform_invite_cn" value="{$msg['platform_invite_cn']}" placeholder="" style="width: 20%;">
-                                                <span class="layui-form-mid layui-word-aux">参考“来鹿号”</span>
+                                                <span class="layui-form-mid layui-word-aux">参考“翠花号”</span>
                                             </div>
                                         </div>
 

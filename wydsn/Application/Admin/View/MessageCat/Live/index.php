@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="layui-inline">
-                            <label class="layui-form-label" style='width:100px'>用户来鹿号/UID</label>
+                            <label class="layui-form-label" style='width:100px'>用户翠花号/UID</label>
                             <div class="layui-input-inline" style="width: 100px">
                                 <input type="text" placeholder="" name="u_str" value="{$search['u_str']}" class="layui-input">
                             </div>
@@ -96,7 +96,7 @@
                                     <th>ID</th>
                                     <th>标题</th>
                                     <th>封面</th>
-                                    <th>主播昵称/来鹿号/id</th>
+                                    <th>主播昵称/翠花号/id</th>
                                     <th>分类</th>
                                     <th>状态</th>
                                     <th>观看量</th>

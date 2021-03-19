@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 http://www.lailu.shop
+ * by 翠花 http://www.lailu.shop
  * 其他管理-Banner/广告管理
  */
 namespace Admin\Controller;

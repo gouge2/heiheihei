@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  *  AccountConfig/获取配置账号接口
  */
 namespace App\Controller;
@@ -91,7 +91,7 @@ class AccountConfigController extends AuthController
             "mob_app_secret" => MOB_APPSECRET,   // mob账号appsecret
             "auth" => "76D3b5240a99b2131be",
             "v_key" => WY_APPKEY,           // 维易淘宝客key
-            "platform_invitr" => PLATFORM_INVITR_CN,   // 来鹿号
+            "platform_invitr" => PLATFORM_INVITR_CN,   // 翠花号
             "tx_sdk_app_id" => TENCENT_IM_SDKAPPID,   //腾讯IM sdkappid
             "licence_url" => defined('TENCENT_LICENCE_URL') ? TENCENT_LICENCE_URL : '',  // 腾讯云直播licence
             "license_key" => defined('TENCENT_LICENCE_KEY') ? TENCENT_LICENCE_KEY : '',   //腾讯云直播licence_key

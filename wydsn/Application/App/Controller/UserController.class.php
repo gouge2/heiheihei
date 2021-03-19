@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 http://www.lailu.shop
+ * by 翠花 http://www.lailu.shop
  * 用户管理接口
  */
 namespace App\Controller;
@@ -234,7 +234,7 @@ class UserController extends AuthController
 			'expiration_date'   => $msg['expiration_date'],
 			'is_forever'        => $msg['is_forever'],
 			'auth_code'         => $msg['auth_code'],
-			'll_no'         	=> $msg['auth_code'],      // 来鹿号
+			'll_no'         	=> $msg['auth_code'],      // 翠花号
 			'is_share_vip'      => $msg['is_share_vip'],
 			'is_complete_info'  => $msg['is_complete_info'],
 			'is_host'  			=> $msg['is_host'],

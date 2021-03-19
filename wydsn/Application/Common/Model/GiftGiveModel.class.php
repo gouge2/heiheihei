@@ -125,7 +125,7 @@ class GiftGiveModel extends Model
         $result     = ['code' => 'fail', 'msg' => 0];
         $date       = date('Y-m-d H:i:s');
 
-        $deer_ratio = GIFT_D_RATIO;                                   // 鹿角转来鹿币比例
+        $deer_ratio = GIFT_D_RATIO;                                   // 鹿角转翠花币比例
 
         $User 	    = new \Common\Model\UserModel();
         $UserDetail = new \Common\Model\UserDetailModel();
@@ -223,7 +223,7 @@ class GiftGiveModel extends Model
                     // 用户鹿角减少
                     $User->where(['uid' => $uid])->setDec('ll_balance', $money);
 
-                    // 主播来鹿币加
+                    // 主播翠花币加
                     $User->where(['uid' => $lr_one['user_id']])->setInc('ll_deer', ($money * $deer_ratio));
 
                     // 记录打赏记录
@@ -279,7 +279,7 @@ class GiftGiveModel extends Model
             if ($type == 'gift') {
                 $list   = $this->query("SELECT * from (SELECT `host_id` as `user_id`,SUM(money) as money,MAX(id) as id,MAX(add_time) as add_time,COUNT(id) as num FROM __GIFT_GIVE__ WHERE `user_id` = {$uid} AND `is_status` = 'succ' GROUP BY `host_id`) t ORDER BY {$sort} limit {$start},{$limit}");
 
-            // 来鹿币记录
+            // 翠花币记录
             } elseif ($type == 'deer') {
                 $list   = $this->query("SELECT * from (SELECT `user_id`,SUM(deer) as money,MAX(id) as id,MAX(add_time) as add_time,COUNT(id) as num FROM __GIFT_GIVE__ WHERE `host_id` = {$uid} AND `is_status` = 'succ' GROUP BY `user_id`) t ORDER BY {$sort} limit {$start},{$limit}");
             }

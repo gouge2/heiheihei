@@ -761,7 +761,7 @@ class LiveController extends AuthController
             $new_fans       = $UserConcern->where(['by_id' => $uid, 'add_time' => [['elt', date('Y-m-d H:i:s')], ['egt', $ls_one['start_time']]]])->count();
 
             // 奖励信息
-            $d_ratio        = GIFT_D_RATIO;         // 鹿角转来鹿币比例
+            $d_ratio        = GIFT_D_RATIO;         // 鹿角转翠花币比例
             $cost           = GIFT_COST;            // 平台扣费百分比
             $give_whe       = ['host_id' => $uid, 'site_id' => $ls_one['site_id'], 'is_status' => 'succ'];
             $give_money     = $GiftGive->where($give_whe)->sum('money');

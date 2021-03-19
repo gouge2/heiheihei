@@ -370,7 +370,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="tipaaa">来鹿提供技术支持</div>
+	<div class="tipaaa">翠花提供技术支持</div>
 	<div class="tipLogo"><?php echo WEB_TITLE;?>智能看板</div>
 
 	<script src="/Public/618/jquery-1.10.2.js"></script>

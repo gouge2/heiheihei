@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  * 用户积分变更记录管理
  * 变更情况：
  * ①用户支付消费时增加，积分增加数量和金额相等

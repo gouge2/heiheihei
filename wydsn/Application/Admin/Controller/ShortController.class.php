@@ -377,7 +377,7 @@ class ShortController extends AuthController
 
 			$user           = $UserDetail->getUserDetailMsg($uid);
 
-			// 来鹿号搜索
+			// 翠花号搜索
 			if (!$user) {
 				$user_id    = $UserAuthCode->where(['auth_code' => $uid, 'is_used' => 'Y'])->getField('user_id');
 				if ($user_id) {

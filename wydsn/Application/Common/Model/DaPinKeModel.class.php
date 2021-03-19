@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  * 大拼客API接口
  * 接口文档地址：https://www.dapinke.com/open-api/index
  */

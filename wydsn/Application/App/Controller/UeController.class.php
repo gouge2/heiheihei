@@ -822,7 +822,7 @@ class UeController extends AuthController
     }
 
     /**
-     * 搜索 昵称/来鹿号/房间号 查询用户
+     * 搜索 昵称/翠花号/房间号 查询用户
      */
     public function getSearchUser()
     {

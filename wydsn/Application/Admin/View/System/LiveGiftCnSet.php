@@ -34,7 +34,7 @@
                                     <div class="layui-input-inline" style="width: 40px;">
                                         <input type="text" name="gift_d_ratio" placeholder="" lay-verify="number" autocomplete="off" class="layui-input" value="{$msg.gift_d_ratio}">
                                     </div>
-                                    <label class="layui-form-label new_label"><?php echo $msg['gift_deer_cn'] ? $msg['gift_deer_cn'] : '来鹿币'; ?></label>
+                                    <label class="layui-form-label new_label"><?php echo $msg['gift_deer_cn'] ? $msg['gift_deer_cn'] : '翠花币'; ?></label>
                                 </div>
                                 
                                 <div class="layui-inline">
@@ -42,7 +42,7 @@
                                     <div class="layui-input-inline" style="width: 50px;">
                                         <input type="text" name="gift_r_ratio" placeholder="" lay-verify="number" autocomplete="off" class="layui-input" value="{$msg.gift_r_ratio}">
                                     </div>
-                                    <label class="layui-form-label new_label"><?php echo $msg['gift_deer_cn'] ? $msg['gift_deer_cn'] : '来鹿币'; ?></label>
+                                    <label class="layui-form-label new_label"><?php echo $msg['gift_deer_cn'] ? $msg['gift_deer_cn'] : '翠花币'; ?></label>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label new_label">主播扣费百分比</label>

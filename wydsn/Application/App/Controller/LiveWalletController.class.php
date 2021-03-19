@@ -17,8 +17,8 @@ class LiveWalletController extends AuthController
         $token               = trim(I('post.token'));
 
         if (IS_POST) {
-            $d_ratio    = GIFT_D_RATIO;             // 鹿角转来鹿币比例
-            $r_ratio    = GIFT_R_RATIO;             // 余额转来鹿币比例
+            $d_ratio    = GIFT_D_RATIO;             // 鹿角转翠花币比例
+            $r_ratio    = GIFT_R_RATIO;             // 余额转翠花币比例
             $cost       = GIFT_COST;                // 平台扣费百分比
             $convert_min= GIFT_CONVERT_MIN;         // 兑换鹿角最少的金额
             $extract_min= GIFT_EXTRACT_MIN;         // 提取最少的金额
@@ -49,11 +49,11 @@ class LiveWalletController extends AuthController
     }
 
     /**
-     * 送出礼物记录 / 来鹿币记录
+     * 送出礼物记录 / 翠花币记录
      */
     public function getGiveList()
     {
-        $type               = trim(I('post.type'));             // 查询类型  gift礼物记录  deer来鹿币记录                  
+        $type               = trim(I('post.type'));             // 查询类型  gift礼物记录  deer翠花币记录                  
         $platform           = trim(I('post.platform'));         // 平台类型 ios：苹果端  android：安卓端  applet：微信小程序端
         $limit              = I('post.limit/d', self::$limit);
         $page               = I('post.page/d', self::$page);
@@ -75,12 +75,12 @@ class LiveWalletController extends AuthController
 
 
     /**
-     * 送出礼物详情 / 来鹿币记录详情
+     * 送出礼物详情 / 翠花币记录详情
      */
     public function getGiveDetail()
     {
         $view_id            = I('post.view_id/d');
-        $type               = trim(I('post.type'));             // 查询类型  gift礼物记录  deer来鹿币记录
+        $type               = trim(I('post.type'));             // 查询类型  gift礼物记录  deer翠花币记录
         $platform           = trim(I('post.platform'));         // 平台类型 ios：苹果端  android：安卓端  applet：微信小程序端
         $limit              = I('post.limit/d', self::$limit);
         $page               = I('post.page/d', self::$page);
@@ -120,10 +120,10 @@ class LiveWalletController extends AuthController
             $this->verifyUserToken($token, $User, $res_token);
             $uid            = $res_token['uid'];
 
-            $d_ratio        = GIFT_D_RATIO;                // 鹿角转来鹿币比例
+            $d_ratio        = GIFT_D_RATIO;                // 鹿角转翠花币比例
             $cost           = GIFT_COST;                   // 平台扣费百分比
-            $deer           = ceil(($money * $d_ratio * 100) / (100 - $cost));      // 要扣除的来鹿币金额 进一法取整
-            $deduct         = $deer - ($money * $d_ratio);                          // 扣除的来鹿币手续费
+            $deer           = ceil(($money * $d_ratio * 100) / (100 - $cost));      // 要扣除的翠花币金额 进一法取整
+            $deduct         = $deer - ($money * $d_ratio);                          // 扣除的翠花币手续费
 
             $one            = $User->field('ll_balance,ll_deer')->where(['uid' => $uid])->find();
 
@@ -153,7 +153,7 @@ class LiveWalletController extends AuthController
 
             $User->startTrans();   // 启用事务
             try {
-                // 用户来鹿币减 鹿角加
+                // 用户翠花币减 鹿角加
                 $User->where(['uid' => $uid, 'll_deer' => ['egt', $deer]])->save($update);
 
                 // 添加兑换记录
@@ -196,10 +196,10 @@ class LiveWalletController extends AuthController
             $this->verifyUserToken($token, $User, $res_token);
             $uid            = $res_token['uid'];
 
-            $r_ratio        = GIFT_R_RATIO;                 // 余额转来鹿币比例
+            $r_ratio        = GIFT_R_RATIO;                 // 余额转翠花币比例
             $cost           = GIFT_COST;                    // 平台扣费百分比
-            $deer           = ceil(($money * $r_ratio * 100) / (100 - $cost));      // 要扣除的来鹿币金额 进一法取整
-            $deduct         = $deer - ($money * $r_ratio);                          // 扣除的来鹿币手续费
+            $deer           = ceil(($money * $r_ratio * 100) / (100 - $cost));      // 要扣除的翠花币金额 进一法取整
+            $deduct         = $deer - ($money * $r_ratio);                          // 扣除的翠花币手续费
 
             $one            = $User->field('balance,ll_deer')->where(['uid' => $uid])->find();
 
@@ -230,7 +230,7 @@ class LiveWalletController extends AuthController
 
             $User->startTrans();   // 启用事务
             try {
-                // 用户来鹿币减
+                // 用户翠花币减
                 $User->where(['uid' => $uid, 'll_deer' => ['egt', $deer]])->save($update);
 
                 // 添加提取记录

@@ -103,7 +103,7 @@ if($_COOKIE['remember']=='ok')
 
 <!-- copyright -->
 <div class="footer">
-    <p>Copyright &copy; 2020.来鹿网络科技 All rights reserved.</p>
+    <p>Copyright &copy; 2020.翠花网络科技 All rights reserved.</p>
 </div>
 <!-- //copyright -->
 

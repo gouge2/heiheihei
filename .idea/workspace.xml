@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="695cb34f-2476-4eec-a1e4-8f5e6df769e5" name="默认变更列表" comment="">
-      <change beforePath="$PROJECT_DIR$/php基础学习.md" beforeDir="false" afterPath="$PROJECT_DIR$/php基础学习.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/account.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/autoload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/db.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/draw.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/extra.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/extra.config.temp.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/fee.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/login.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/point.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/sensitive_word.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/sqkey.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/status.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/user.config.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/wydsn/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -32,9 +72,13 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
       <changelist id="695cb34f-2476-4eec-a1e4-8f5e6df769e5" name="默认变更列表" comment="" />
@@ -43,10 +87,50 @@
       <option name="presentableId" value="Default" />
       <updated>1615356295156</updated>
       <workItem from="1615356296262" duration="2421000" />
+      <workItem from="1615886677288" duration="555000" />
+      <workItem from="1615954928394" duration="165000" />
+      <workItem from="1615955101283" duration="20000" />
+      <workItem from="1616139592587" duration="95000" />
+      <workItem from="1616139893098" duration="1523000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="261" y="100" key="SettingsEditor" timestamp="1616139675878">
+      <screen x="80" y="23" width="1360" height="877" />
+    </state>
+    <state x="261" y="100" key="SettingsEditor/80.23.1360.877@80.23.1360.877" timestamp="1616139675878" />
+    <state x="453" y="216" width="603" height="490" key="find.popup" timestamp="1616142427995">
+      <screen x="68" y="23" width="1372" height="877" />
+    </state>
+    <state x="453" y="216" width="603" height="490" key="find.popup/68.23.1372.877@68.23.1372.877" timestamp="1616142427995" />
+    <state x="459" y="216" width="599" height="490" key="find.popup/77.23.1363.877@77.23.1363.877" timestamp="1615533003734" />
   </component>
 </project>

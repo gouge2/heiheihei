@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="layui-form-item">
-                                <label class="layui-form-label" style="width: 130px;">主播uid/来鹿号</label>
+                                <label class="layui-form-label" style="width: 130px;">主播uid/翠花号</label>
                                 <div class="layui-input-inline" style="width: 110px;margin:0">
                                     <input type="text" name="user_str" lay-verify="required" value="" placeholder="请输入主播uid" autocomplete="off" class="layui-input">
                                 </div>

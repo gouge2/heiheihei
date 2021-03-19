@@ -61,7 +61,7 @@ class LiveController extends AuthController
 		}
 
 		if ($search['u_str']) {
-			$whe['user_id'] = $UserDetail->uIdOrDeer($search['u_str']);  // 用户ID搜索或者来鹿号搜索
+			$whe['user_id'] = $UserDetail->uIdOrDeer($search['u_str']);  // 用户ID搜索或者翠花号搜索
 		}
 
 		if ($status) {

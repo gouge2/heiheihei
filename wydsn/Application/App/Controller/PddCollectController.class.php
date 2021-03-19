@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  * 拼多多收藏商品管理接口
  */
 namespace App\Controller;

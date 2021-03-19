@@ -1,6 +1,6 @@
 <?php
 /**
- * by 来鹿 www.lailu.shop
+ * by 翠花 www.lailu.shop
  *  AccountConfig/获取配置账号接口
  */
 namespace App\Controller;
