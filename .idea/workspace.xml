@@ -28,21 +28,8 @@
   <component name="ChangeListManager">
     <list default="true" id="695cb34f-2476-4eec-a1e4-8f5e6df769e5" name="默认变更列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/account.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/autoload.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/db.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/draw.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/extra.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/extra.config.temp.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/fee.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/login.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/point.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/sensitive_word.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/sqkey.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/status.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/inc.example/user.config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/SystemController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/SystemController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Public/static/admin/img/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Public/static/admin/img/logo.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +78,7 @@
       <workItem from="1615954928394" duration="165000" />
       <workItem from="1615955101283" duration="20000" />
       <workItem from="1616139592587" duration="95000" />
-      <workItem from="1616139893098" duration="1523000" />
+      <workItem from="1616139893098" duration="8512000" />
     </task>
     <servers />
   </component>
@@ -127,10 +114,10 @@
       <screen x="80" y="23" width="1360" height="877" />
     </state>
     <state x="261" y="100" key="SettingsEditor/80.23.1360.877@80.23.1360.877" timestamp="1616139675878" />
-    <state x="453" y="216" width="603" height="490" key="find.popup" timestamp="1616142427995">
+    <state x="453" y="216" width="603" height="548" key="find.popup" timestamp="1616142952987">
       <screen x="68" y="23" width="1372" height="877" />
     </state>
-    <state x="453" y="216" width="603" height="490" key="find.popup/68.23.1372.877@68.23.1372.877" timestamp="1616142427995" />
+    <state x="453" y="216" width="603" height="548" key="find.popup/68.23.1372.877@68.23.1372.877" timestamp="1616142952987" />
     <state x="459" y="216" width="599" height="490" key="find.popup/77.23.1363.877@77.23.1363.877" timestamp="1615533003734" />
   </component>
 </project>

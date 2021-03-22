@@ -1,48 +1,15 @@
 <?php
 namespace Admin\Controller;
 use Admin\Common\Controller\AuthController;
-use Cassandra\Set;
 use Common\Model\SettingModel;
 use Common\Model\TaobaoCatModel;
 use Common\Model\AdvertHeadModel;
-use Common\Model\UserDrawApplyModel;
 
 class SystemController extends AuthController
 {
     //获取版本信息，底部展示
     public function versionInfo()
     {
-        $version = file_get_contents('./version.txt');
-//        $version='';
-//        if(VERSION_WAY == 1){
-//            if(!$version){
-//                if(file_exists('./version.txt')){
-//                    $version = file_get_contents('./version.txt');
-//                }else{
-//                    exit('version.txt is not exists.');
-//                }
-//            }
-//        }else{
-//            if(!$version){
-//                if(file_exists(DATA_ROOT.'version.php')){
-//                    $version = include DATA_ROOT.'version.php';
-//                }else{
-//                    exit('/data/version.php is not exists.');
-//                }
-//            }
-//        }
-
-//        $apiurl = 'http://safe.taokeyun.cn/check.php?xz=1&v='.$version;
-//        $host = 'tao.lailu.live';
-//        $hosts = $host . '|' . 'tao.lailu.live';
-//        $time = time();
-//        $host_url = 'http://' .$host. '/';
-//        $site_url_md5 = substr(md5($host_url),-16,-6);
-//        $appid = 25;
-//        $sqkey = '';
-//        $token = md5($time . '|' . $hosts . '|xzphp|'.$site_url_md5);
-//        $apiurl.= '&appid='.$appid.'&h=' . $hosts . '&t=' . $time . '&token=' . $token . '&v=' . $version.'&sqkey='.$sqkey;
-//        $url = $apiurl . '&a=upgrade';
         $url = 'http://'.$_SERVER['SERVER_NAME'].'/upgrade.php?act=check';
         $html = file_get_contents($url);
 
@@ -1310,9 +1277,6 @@ class SystemController extends AuthController
             //返利时间
             $rebate_time=I('post.rebate_time');
             $model_setting->set('rebate_time', $rebate_time, $cache_file);
-
-            $rebate_times=I('post.rebate_times');
-            $model_setting->set('rebate_times', $rebate_times, $cache_file);
             $this->cacheSetting($cache_file);
             $this->success('保存成功！');
         }else {
