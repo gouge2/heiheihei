@@ -213,9 +213,9 @@ class SystemController extends AuthController
             $this->assign('pdd_list',$pdd_list);
 
             //获取最近30天自营订单
-            $self_sql = "SELECT count(id) as num, date(FROM_UNIXTIME(UNIX_TIMESTAMP(u.create_time), '%Y-%m-%d')) as date FROM __PREFIX__order_detail r INNER JOIN __PREFIX__order u on r.order_num = u.order_num WHERE ( r.fx_profit_money>0 and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(FROM_UNIXTIME(UNIX_TIMESTAMP(create_time), '%Y-%m-%d')) )";
-            $self_list=M()->query($self_sql);
-            $this->assign('self_list',$self_list);
+//            $self_sql = "SELECT count(id) as num, date(FROM_UNIXTIME(UNIX_TIMESTAMP(u.create_time), '%Y-%m-%d')) as date FROM __PREFIX__order_detail r INNER JOIN __PREFIX__order u on r.order_num = u.order_num WHERE ( r.fx_profit_money>0 and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= date(FROM_UNIXTIME(UNIX_TIMESTAMP(create_time), '%Y-%m-%d')) )";
+//            $self_list=M()->query($self_sql);
+            $this->assign('self_list','');
             $this->display();
 
             //获取最近30天唯品会订单

@@ -27,9 +27,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="695cb34f-2476-4eec-a1e4-8f5e6df769e5" name="默认变更列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/SystemController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/SystemController.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Public/static/admin/img/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Public/static/admin/img/logo.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +77,7 @@
       <workItem from="1615955101283" duration="20000" />
       <workItem from="1616139592587" duration="95000" />
       <workItem from="1616139893098" duration="8512000" />
+      <workItem from="1616424336463" duration="262000" />
     </task>
     <servers />
   </component>
