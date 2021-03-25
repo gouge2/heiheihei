@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  *  AccountConfig/获取配置账号接口
  */
 namespace App\Controller;

@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 第三方社交平台账号共享
  */
 namespace Common\Model;

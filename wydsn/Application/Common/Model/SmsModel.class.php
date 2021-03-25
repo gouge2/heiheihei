@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 手机短信类
  * 注意：
  * 不同的客户请替换账号sid，密码apikey,短信模板tplid

@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  * 京东订单管理接口
  */
 namespace App\Controller;

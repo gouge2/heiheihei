@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 商城系统-商品分类属性值配置
  */
 namespace Admin\Controller;

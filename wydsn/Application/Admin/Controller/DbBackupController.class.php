@@ -4,7 +4,7 @@ use Admin\Common\Controller\AuthController;
 use Think\Db;
 
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 数据库备份还原
  */
 class DbBackupController extends AuthController

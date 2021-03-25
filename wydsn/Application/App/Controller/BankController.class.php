@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 银行管理接口
  */
 namespace App\Controller;

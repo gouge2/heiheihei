@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 淘宝商品分类管理类
  * 淘宝官方分类
  */

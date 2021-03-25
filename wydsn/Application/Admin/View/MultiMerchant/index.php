@@ -31,8 +31,16 @@
         }
 
         #st a {
-            width: 100px;
-            margin-right: 61px;
+            width: 48%;
+            margin-left: 2%;
+        }
+
+        .layui-table td, .layui-table th{
+            text-align: center;
+        }
+
+        .sweet-alert button.cancel {
+            background-color: rgb(221, 107, 85);
         }
     </style>
 </head>
@@ -61,9 +69,7 @@
 
                                 <foreach name="list" item="l">
                                     <tr>
-                                        <td>多商户
-                                            <h4 style="position: relative; margin-top: -17px;margin-left: 50px;color: red;">
-                                                【测试版】</h4></td>
+                                        <td>多商户</td>
                                         <td>多商户系统</td>
                                         <td>
                                             <?php $cat_str = $l['type'] ? 'checked' : ''; ?>
@@ -75,7 +81,7 @@
                                             <div id='st' style="display: <?php echo $none; ?>">
                                                 <a class="layui-btn pull-right" target="_blank"
                                                    href="/merchant/web/index.php?c=site&a=entry&m=shop&do=web&r=merch">进入后台</a>
-                                                <a style="width: 142px;" class="layui-btn pull-right"
+                                                <a style="" class="layui-btn pull-right"
                                                    href="__CONTROLLER__/setUp"" >商户入驻设置</a>
                                             </div>
                                         </td>
@@ -92,7 +98,7 @@
                                         <td>
                                             <?php $none1 = $l['latipay_type'] ? 'block' : 'none'; ?>
                                             <div id='st1' style="display: <?php echo $none1; ?>">
-                                                <a style="width: 142px;margin-right: 119px;"
+                                                <a style="margin-right: 36%;"
                                                    class="layui-btn pull-right"
                                                    href="__CONTROLLER__/../LatipayConfig/setUp?id=1"" >参数设置</a>
                                             </div>
@@ -110,7 +116,7 @@
                                         <td>
                                             <?php $none2 = $l['twitter_type'] ? 'block' : 'none'; ?>
                                             <div id='st2' style="display: <?php echo $none2; ?>">
-                                                <a style="width: 142px;margin-right: 119px;"
+                                                <a style="margin-right: 36%;"
                                                    class="layui-btn pull-right"
                                                    href="__CONTROLLER__/../LatipayConfig/setUp?id=2"" >参数设置</a>
                                             </div>
@@ -128,7 +134,7 @@
                                         <td>
                                             <?php $none3 = $l['facebook_type'] ? 'block' : 'none'; ?>
                                             <div id='st3' style="display: <?php echo $none3; ?>">
-                                                <a style="width: 142px;margin-right: 119px;background-color: #7a8685;"
+                                                <a style="margin-right: 36%;background-color: #7a8685;"
                                                    class="layui-btn pull-right">不需设置</a>
                                             </div>
                                         </td>
@@ -145,7 +151,7 @@
                                         <td>
                                             <?php $none4 = $l['paypal_type'] ? 'block' : 'none'; ?>
                                             <div id='st4' style="display: <?php echo $none4; ?>">
-                                                <a style="width: 142px;margin-right: 119px;"
+                                                <a style="margin-right: 36%;"
                                                    class="layui-btn pull-right"
                                                    href="__CONTROLLER__/../LatipayConfig/setUp?id=3"" >参数设置</a>
                                             </div>
@@ -163,8 +169,8 @@
                                         <td>
                                             <?php $none5 = $l['paypal_type'] ? 'block' : 'none'; ?>
                                             <div id='st5' style="display: <?php echo $none5; ?>">
-                                                <a style="width: 142px;margin-right: 119px;" class="layui-btn pull-right"
-                                                   href="__MODULE__/MultiLanguage/countryList">多语言设置</a>
+                                                <a style="margin-right: 36%;" class="layui-btn pull-right"
+                                                   href="__MODULE__/MultiLanguage/countryList">参数设置</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -316,10 +322,5 @@
         }
     });
 </script>
-<style>
-    .sweet-alert button.cancel {
-        background-color: rgb(221, 107, 85);
-    }
-</style>
 </body>
 </html>

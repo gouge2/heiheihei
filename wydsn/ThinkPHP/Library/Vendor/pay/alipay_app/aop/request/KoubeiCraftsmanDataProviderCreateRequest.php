@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  * ALIPAY API: koubei.craftsman.data.provider.create request
  *
  * @author auto create

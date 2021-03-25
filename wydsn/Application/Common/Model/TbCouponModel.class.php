@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  * 淘宝隐藏优惠券管理类
  */
 namespace Common\Model;

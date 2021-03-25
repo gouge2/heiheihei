@@ -20,5 +20,5 @@
 <p class="copy">
 	<span class="mgr6">Copyright 2017</span>
 	<span class="mgr6">深圳翠花科技有限公司&nbsp;&nbsp;保留一切权利。</span>
-	&nbsp;&nbsp;<a href="https://www.lailu.shop/" target="_blank" style="color: #fff">技术支持：翠花</a>
+	&nbsp;&nbsp;<a href="https://http://livedd.com/" target="_blank" style="color: #fff">技术支持：翠花</a>
 </p>

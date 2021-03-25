@@ -31,7 +31,7 @@
 				<a href="/index.php" title="返回首页">
 					<div class="link" id="home"></div>
 				</a>
-				<a href="www.lailu.shop" target="_blank" title="联系管理员">
+				<a href="http://livedd.com" target="_blank" title="联系管理员">
 					<div class="link" id="contact"></div>
 				</a>
 			</div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * ALIPAY API: zhima.data.feedbackurl.query request
  *
  * @author auto create

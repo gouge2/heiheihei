@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 对ueditor文件进行增删改操作
  * 注意：请建立对应存储文件夹
  */

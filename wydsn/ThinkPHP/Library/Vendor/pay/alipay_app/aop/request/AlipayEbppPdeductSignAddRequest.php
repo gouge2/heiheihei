@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * ALIPAY API: alipay.ebpp.pdeduct.sign.add request
  *
  * @author auto create

@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 http://www.lailu.shop
+ * by 翠花 http://http://livedd.com
  * 上传附件和上传视频
  * User: 小杨
  * Date: 20-04-09

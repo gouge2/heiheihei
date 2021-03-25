@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  * 好单库淘宝商品管理接口
  */
 namespace App\Controller;

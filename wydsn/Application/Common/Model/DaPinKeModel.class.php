@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  * 大拼客API接口
  * 接口文档地址：https://www.dapinke.com/open-api/index
  */

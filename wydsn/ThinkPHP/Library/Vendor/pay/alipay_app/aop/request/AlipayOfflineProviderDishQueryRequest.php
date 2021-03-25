@@ -1,6 +1,6 @@
 <?php
 /**
- * by 翠花 www.lailu.shop
+ * by 翠花 http://livedd.com
  * ALIPAY API: alipay.offline.provider.dish.query request
  *
  * @author auto create
