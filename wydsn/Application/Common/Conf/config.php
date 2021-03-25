@@ -14,7 +14,7 @@ return array(
     'DB_PWD'=>DB_PASSWORD, //密码
     'DB_PORT'=>DB_PORT,
     'DB_CHARSET' => 'utf8',
-    'DB_PREFIX' => 'lailu_', //数据表前缀
+    'DB_PREFIX' => 'ch_', //数据表前缀
     'DB_DEBUG' => TRUE, // 数据库调试模式 开启后可以记录SQL日志
     'LOAD_EXT_FILE' => 'code.config',    // 自动加载错误码文件
 

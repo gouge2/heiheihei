@@ -110,23 +110,23 @@ class SystemController extends AuthController
 
             //统计自营订单数
             //已结算订单
-            $self_order_finished_num = $SelfOrder->table("lailu_order_detail r")
+            $self_order_finished_num = $SelfOrder->table("ch_order_detail r")
                 ->join("__ORDER__ u on r.order_num = u.order_num")
                 ->where("u.status=10 and r.fx_profit_money>0")->count();
 
             $this->assign('self_order_finished_num',$self_order_finished_num);
             //已付款订单
-            $self_order_pay_num = $SelfOrder->table("lailu_order_detail r")
+            $self_order_pay_num = $SelfOrder->table("ch_order_detail r")
                 ->join("__ORDER__ u on r.order_num = u.order_num")
                 ->where("u.status in (4,5) and r.fx_profit_money>0")->count();
             $this->assign('self_order_pay_num',$self_order_pay_num);
             //今日订单
-            $self_order_today_num = $SelfOrder->table("lailu_order_detail r")
+            $self_order_today_num = $SelfOrder->table("ch_order_detail r")
                 ->join("__ORDER__ u on r.order_num = u.order_num")
                 ->where("r.fx_profit_money>0 and date_format(UNIX_TIMESTAMP(u.create_time),'%Y-%m-%d')=date_format(now(),'%Y-%m-%d')")->count();
             $this->assign('self_order_today_num',$self_order_today_num);
             //本月订单
-            $self_order_month_num = $SelfOrder->table("lailu_order_detail r")
+            $self_order_month_num = $SelfOrder->table("ch_order_detail r")
                 ->join("__ORDER__ u on r.order_num = u.order_num")
                 ->where("r.fx_profit_money>0 and date_format(UNIX_TIMESTAMP(u.create_time),'%Y-%m') = date_format(now(),'%Y-%m')")->count();
             $this->assign('self_order_month_num',$self_order_month_num);

@@ -5,10 +5,10 @@ return array(
 		'AUTH_CONFIG' => array(
 				'AUTH_ON' => true, //是否开启权限
 				'AUTH_TYPE' => 1, //
-				'AUTH_GROUP' => 'lailu_admin_group', //用户组
-				'AUTH_GROUP_ACCESS' => 'lailu_admin', //用户-用户组关系表
-				'AUTH_RULE' => 'lailu_auth_rule', //权限规则表
-				'AUTH_USER' => 'lailu_admin'// 管理员表
+				'AUTH_GROUP' => 'ch_admin_group', //用户组
+				'AUTH_GROUP_ACCESS' => 'ch_admin', //用户-用户组关系表
+				'AUTH_RULE' => 'ch_auth_rule', //权限规则表
+				'AUTH_USER' => 'ch_admin'// 管理员表
 		),
 		//'DB_PATH_NAME'=> '/Public/db',        //备份目录名称,主要是为了创建备份目录；
 		'DB_PATH'     => './Public/db/',     //数据库备份路径必须以 / 结尾；

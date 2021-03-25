@@ -360,7 +360,7 @@ class OrderModel extends Model
                     //获取订单详情
                     $OrderDetail = new \Common\Model\OrderDetailModel();
                     // 查询数据
-                    $list[] = $OrderDetail->table("lailu_order_detail r")
+                    $list[] = $OrderDetail->table("ch_order_detail r")
                         ->join("__ORDER__ u on r.order_num = u.order_num")
                         ->field('u.create_time,u.allprice,u.order_num,u.user_id,u.shop_id,u.freight,id,status')
                         ->where("u.user_id={$v['user_id']} and r.order_num = u.order_num and r.goods_id={$v['goods_id']}")->where($where)->find();

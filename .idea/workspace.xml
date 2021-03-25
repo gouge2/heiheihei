@@ -27,7 +27,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="695cb34f-2476-4eec-a1e4-8f5e6df769e5" name="默认变更列表" comment="">
-      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Admin/Conf/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Admin/Conf/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/RookieRecordController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/RookieRecordController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/SystemController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Admin/Controller/SystemController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Common/Conf/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Common/Conf/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Common/Model/OrderModel.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Common/Model/OrderModel.class.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +84,7 @@
       <workItem from="1616139592587" duration="95000" />
       <workItem from="1616139893098" duration="8512000" />
       <workItem from="1616424336463" duration="3676000" />
-      <workItem from="1616659151738" duration="2626000" />
+      <workItem from="1616659151738" duration="4820000" />
     </task>
     <servers />
   </component>
@@ -115,10 +120,10 @@
       <screen x="80" y="23" width="1360" height="877" />
     </state>
     <state x="261" y="100" key="SettingsEditor/80.23.1360.877@80.23.1360.877" timestamp="1616139675878" />
-    <state x="459" y="216" width="599" height="548" key="find.popup" timestamp="1616661925579">
+    <state x="459" y="216" width="599" height="548" key="find.popup" timestamp="1616664106924">
       <screen x="77" y="23" width="1363" height="877" />
     </state>
     <state x="453" y="216" width="603" height="548" key="find.popup/68.23.1372.877@68.23.1372.877" timestamp="1616142952987" />
-    <state x="459" y="216" width="599" height="548" key="find.popup/77.23.1363.877@77.23.1363.877" timestamp="1616661925579" />
+    <state x="459" y="216" width="599" height="548" key="find.popup/77.23.1363.877@77.23.1363.877" timestamp="1616664106924" />
   </component>
 </project>

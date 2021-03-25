@@ -29,7 +29,7 @@ class RookieRecordController extends AuthController
             $this->assign('is_ex', $is_ex);
         }
         // 查询数据条数
-        $count = $RookieUser->table("lailu_rookie_user r")
+        $count = $RookieUser->table("ch_rookie_user r")
                 ->join("__USER__ u on r.user_id = u.uid")
                 ->field('u.username,r.exchange,r.num,r.is_ex,r.rid')
                 ->where($where)->count();
@@ -44,7 +44,7 @@ class RookieRecordController extends AuthController
         $page = $Page->show($count,$per);
 
         // 查询数据
-        $data = $RookieUser->table("lailu_rookie_user r")
+        $data = $RookieUser->table("ch_rookie_user r")
                 ->join("__USER__ u on r.user_id = u.uid")
                 ->field('u.username,r.exchange,r.num,r.is_ex,r.rid')
                 ->where($where)->page($p.','.$per)->select();
