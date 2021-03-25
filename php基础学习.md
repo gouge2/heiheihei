@@ -1262,6 +1262,9 @@ XSS:https://baike.baidu.com/item/xss/917356
 #### API 篇
 
 ##### 1、`RESTful` 是什么
+```
+api设计规范但不是标准
+```
 ##### 2、如何在不支持 `DELETE` 请求的浏览器上兼容 `DELETE` 请求
 ##### 3、常见 `API` 的 `APP_ID APP_SECRET` 主要作用是什么？阐述下流程
 ```
