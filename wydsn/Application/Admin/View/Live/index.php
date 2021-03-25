@@ -22,10 +22,10 @@
             overflow: hidden!important;
         }
         .room_manage {
-            display: inline-block; 
-            margin-left: 10px; 
+            display: inline-block;
             position:relative;
             width: 150px;
+            margin-top: 10%;
         }
         .room_manage ul {
             position:absolute;
