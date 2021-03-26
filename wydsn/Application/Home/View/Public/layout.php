@@ -7,7 +7,7 @@
 <meta name="description" content="{$web_description}" />
 <meta name="author" content="深圳翠花科技有限公司" />
 <link rel="stylesheet" type="text/css" href="__HOME_CSS__/common.css"/>
-<link rel="stylesheet" type="text/css" href="__HOME_CSS__/style.css"/>
+<link rel="stylesheet" type="text/css" href="__HOME_CSS_STATIC__/style.css"/>
 <script type="text/javascript" src="__HOME_JS__/jquery.js"></script>
 <script type="text/javascript" src="__HOME_JS__/slider.js">	</script>
 <script type="text/javascript" src="__HOME_JS__/index.js">	</script>

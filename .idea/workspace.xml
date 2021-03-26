@@ -27,8 +27,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="695cb34f-2476-4eec-a1e4-8f5e6df769e5" name="默认变更列表" comment="">
+      <change afterPath="$PROJECT_DIR$/wydsn/Public/static/home/images/logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wydsn/Application/Admin/View/Live/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Admin/View/Live/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Common/Conf/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Common/Conf/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wydsn/Application/Home/View/Public/layout.php" beforeDir="false" afterPath="$PROJECT_DIR$/wydsn/Application/Home/View/Public/layout.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +54,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/wydsn/Public/static/home/images" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -116,10 +119,11 @@
       <screen x="80" y="23" width="1360" height="877" />
     </state>
     <state x="261" y="100" key="SettingsEditor/80.23.1360.877@80.23.1360.877" timestamp="1616139675878" />
-    <state x="459" y="216" width="599" height="548" key="find.popup" timestamp="1616664106924">
-      <screen x="77" y="23" width="1363" height="877" />
+    <state x="461" y="216" width="598" height="548" key="find.popup" timestamp="1616746414484">
+      <screen x="80" y="23" width="1360" height="877" />
     </state>
     <state x="453" y="216" width="603" height="548" key="find.popup/68.23.1372.877@68.23.1372.877" timestamp="1616142952987" />
     <state x="459" y="216" width="599" height="548" key="find.popup/77.23.1363.877@77.23.1363.877" timestamp="1616664106924" />
+    <state x="461" y="216" width="598" height="548" key="find.popup/80.23.1360.877@80.23.1360.877" timestamp="1616746414484" />
   </component>
 </project>

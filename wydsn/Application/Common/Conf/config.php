@@ -32,6 +32,7 @@ return array(
         '__HOME__' => '/Public/static/home', // 静态文件路径-home前台
         '__HOME_JS__' => '/Public/static/home/js', // 静态文件路径-home前台-JS
         '__HOME_CSS__' => '/Public/static/home/css', // 静态文件路径-home前台-CSS
+        '__HOME_CSS_STATIC__' => '/Public/static/home/static/css', // 静态文件路径-home前台-CSS
         '__HOME_IMG__' => '/Public/static/home/images',  // 静态文件路径-home前台-IMG
         '__WAP__' => '/Public/static/wap', // 静态文件路径-wap前台
         '__WAP_JS__' => '/Public/static/wap/js', // 静态文件路径-wap前台-JS
